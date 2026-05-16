@@ -1,1889 +1,920 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ASG UC SHOP PRO | Recharge Gaming Instantanée</title> 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-
+<title>PUBG MALI — Compétition</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 <style>
+/* ===== THEME VARIABLES ===== */
+[data-theme="dark"] {
+  --bg:#07090e; --bg2:#0d1018; --bg3:#13161f; --bg4:#1b1f2e; --bg5:#252a3a;
+  --border:rgba(245,166,35,0.15); --border2:rgba(245,166,35,0.35);
+  --text:#e2e6f3; --text2:#a8b0c8; --muted:#5a6378;
+  --card:rgba(19,22,31,0.95); --shadow:rgba(0,0,0,0.4);
+  --splash-bg:#07090e;
+}
+[data-theme="light"] {
+  --bg:#f0f2f8; --bg2:#e4e8f2; --bg3:#ffffff; --bg4:#eef0f8; --bg5:#dde2ef;
+  --border:rgba(180,140,20,0.2); --border2:rgba(180,140,20,0.45);
+  --text:#1a1d2e; --text2:#4a5070; --muted:#8890aa;
+  --card:rgba(255,255,255,0.98); --shadow:rgba(0,0,0,0.1);
+  --splash-bg:#f0f2f8;
+}
 :root {
-    --primary: #c200fb;
-    --accent: #00f2ff;
-    --bg: #05070a;
-    --card: #0f1218;
-    --text: #ffffff;
-    --text-muted: #94a3b8;
-    --gradient: linear-gradient(135deg, #c200fb 0%, #3b82f6 100%);
-    --glass: #5D6E60;
-    --border: #636884;
-    --pubg: #7B749A;
-    --ff: #ef4444;
-    --codm: #06b6d4;
-    --perso: #22c55e;
-    --orange: #ff7900;
-    --wave: #1dc8ff;
-    --success: #22c55e;
-    --danger: #ef4444;
-    --warning: #f59e0b;
+  --gold:#f5a623; --orange:#ff6b00; --red:#e63946;
+  --green:#2ecc71; --blue:#00b4d8;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-    font-family: 'Inter', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    background-image: radial-gradient(circle at 50% -20%, #2e1065, transparent);
-    transition: background-image 0.5s;
-}
-body.pubg { background-image: radial-gradient(circle at 50% -20%, #92400e, transparent); }
-body.ff { background-image: radial-gradient(circle at 50% -20%, #7f1d1d, transparent); }
-body.codm { background-image: radial-gradient(circle at 50% -20%, #0e7490, transparent); }
-body.perso { background-image: radial-gradient(circle at 50% -20%, #14532d, transparent); }
-
-h1, h2,.game-title { font-family: 'Rajdhani', sans-serif; text-transform: uppercase; }
-.header {
-    padding: 30px 20px;
-    text-align: center;
-    background: rgba(0,0,0,0.4);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border);
-    position: relative;
-}
-.header h1 {
-    font-size: 32px;
-    letter-spacing: 2px;
-    background: var(--gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-.header.pubg h1 { background: linear-gradient(135deg, var(--pubg), #fbbf24); -webkit-background-clip: text; }
-.header.ff h1 { background: linear-gradient(135deg, var(--ff), #f87171); -webkit-background-clip: text; }
-.header.codm h1 { background: linear-gradient(135deg, var(--codm), #22d3ee); -webkit-background-clip: text; }
-.header.perso h1 { background: linear-gradient(135deg, var(--perso), #4ade80); -webkit-background-clip: text; }
-
-.container { max-width: 600px; margin: 20px auto; padding: 0 15px; }
-.view { display: none; }
-.view.active { display: block; animation: fadeIn 0.3s; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-.card {
-    background: var(--card);
-    border-radius: 20px;
-    padding: 24px;
-    margin-bottom: 25px;
-    border: 1px solid var(--border);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    position: relative;
-}
-.card-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: var(--accent);
-}
-.btn-back, .btn-close {
-    position: absolute;
-    top: 20px;
-    background: var(--glass);
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 8px 12px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 14px;
-    z-index: 10;
-}
-.btn-back { left: 20px; }
-.btn-close { right: 20px; background: rgba(239,68,0.2); border-color: var(--danger); }
-.btn-back:hover, .btn-close:hover { background: #36383F; }
-
-.steps-indicator {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 20px;
-}
-.step-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--border);
-    transition: all 0.3s;
-}
-.step-dot.active { background: var(--accent); width: 24px; border-radius: 4px; }
-
-input, select {
-    width: 100%;
-    padding: 14px;
-    background: rgba(0,0,0,0.3);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    color: white;
-    margin: 10px 0;
-    font-size: 15px;
-    transition: all 0.2s;
-}
-input:focus, select:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(194,0,251,0.2);
-}
-input:disabled { opacity: 0.5; cursor: not-allowed; }
-.flex-row { display: flex; gap: 10px; }
-
-.platform-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-.platform-btn {
-    background: var(--glass);
-    border: 1px solid var(--border);
-    padding: 30px 10px;
-    border-radius: 15px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s;
-    position: relative;
-}
-.platform-btn:hover { transform: translateY(-3px); }
-.platform-btn.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
-.platform-btn.disabled::after {
-    content: "MAINTENANCE";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-15deg);
-    background: var(--ff);
-    color: #fff;
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-weight: bold;
-}
-.platform-icon { font-size: 40px; margin-bottom: 10px; }
-.platform-btn div { font-weight: 700; font-size: 14px; }
-
-.uc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; }
-.uc-item {
-    background: var(--glass);
-    border: 1px solid var(--border);
-    padding: 16px 10px;
-    border-radius: 14px;
-    text-align: center;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.2s;
-}
-.uc-item:hover { transform: translateY(-2px); border-color: var(--primary); }
-.uc-item.active {
-    background: var(--gradient);
-    border-color: var(--primary);
-    box-shadow: 0 0 25px rgba(194,0,251,0.4);
-}
-.uc-item-qty { font-weight: 700; font-size: 20px; font-family: 'Rajdhani', sans-serif; }
-.uc-item-price { font-size: 15px; font-weight: 600; margin: 4px 0; }
-.uc-item.active .uc-item-price { color: #fff; }
-.uc-item-oldprice { font-size: 11px; text-decoration: line-through; opacity: 0.6; margin-right: 4px; }
-.uc-item-per { font-size: 10px; opacity: 0.7; margin-top: 2px; }
-.badge {
-    background: var(--ff);
-    color: #fff;
-    font-size: 9px;
-    padding: 3px 7px;
-    border-radius: 10px;
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    font-weight: 700;
-}
-.badge-best { background: var(--success); }
-.discount-tag {
-    background: var(--danger);
-    color: #fff;
-    font-size: 10px;
-    padding: 2px 6px;
-    border-radius: 6px;
-    font-weight: 700;
-    display: inline-block;
-    margin-left: 4px;
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'Inter',sans-serif;min-height:100vh;
+  overflow-x:hidden;transition:background .3s,color .3s;
+  font-size:15px;line-height:1.5;
 }
 
-.promo-box {
-    background: rgba(34,197,94,0.1);
-    border: 1px dashed var(--success);
-    padding: 12px;
-    border-radius: 10px;
-    margin: 15px 0;
-    display: none;
+/* ===== SPLASH ===== */
+#splash{
+  position:fixed;inset:0;z-index:1000;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:var(--splash-bg);
+  background-image:radial-gradient(ellipse at 25% 40%,rgba(245,166,35,0.1) 0%,transparent 55%),
+    radial-gradient(ellipse at 75% 60%,rgba(255,107,0,0.07) 0%,transparent 50%);
+  transition:opacity .5s,transform .5s;padding:24px;
 }
-.promo-box.active { display: block; }
-.promo-applied {
-    background: rgba(34,197,94,0.2);
-    border: 1px solid var(--success);
-    padding: 10px;
-    border-radius: 8px;
-    font-size: 13px;
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+#splash.hide{opacity:0;transform:scale(1.03);pointer-events:none;}
+.splash-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(245,166,35,0.06) 0%,transparent 70%);animation:gpulse 4s ease-in-out infinite;pointer-events:none;}
+@keyframes gpulse{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
+.splash-logo{font-family:'Orbitron',sans-serif;font-size:clamp(36px,8vw,60px);font-weight:900;color:var(--gold);letter-spacing:6px;position:relative;z-index:1;text-shadow:0 0 40px rgba(245,166,35,0.4);animation:fadeUp .8s ease-out both;}
+.splash-logo span{color:var(--orange);}
+.splash-sub{font-size:11px;color:var(--muted);letter-spacing:5px;text-transform:uppercase;margin-top:6px;position:relative;z-index:1;animation:fadeUp .8s .15s ease-out both;}
+.splash-line{width:80px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:24px auto;position:relative;z-index:1;animation:fadeUp .8s .3s ease-out both;}
+.splash-tagline{font-size:16px;color:var(--text2);margin-bottom:40px;text-align:center;position:relative;z-index:1;animation:fadeUp .8s .4s ease-out both;}
+.splash-tagline strong{color:var(--gold);}
+.g-btn{
+  background:#fff;color:#111;border:none;padding:14px 32px;border-radius:12px;
+  font-family:'Inter',sans-serif;font-size:15px;font-weight:700;cursor:pointer;
+  display:flex;align-items:center;gap:10px;
+  transition:all .25s;position:relative;z-index:1;
+  box-shadow:0 8px 28px rgba(0,0,0,.3);
+  animation:fadeUp .8s .6s ease-out both;
 }
+.g-btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(245,166,35,0.22),0 8px 20px rgba(0,0,0,.3);}
+.splash-note{color:var(--muted);font-size:12px;margin-top:16px;text-align:center;max-width:300px;position:relative;z-index:1;animation:fadeUp .8s .8s ease-out both;}
+.splash-counts{display:flex;gap:40px;margin-top:48px;position:relative;z-index:1;animation:fadeUp .8s 1s ease-out both;flex-wrap:wrap;justify-content:center;}
+.sc-item{text-align:center;}
+.sc-val{font-family:'Orbitron',sans-serif;font-size:26px;color:var(--gold);font-weight:700;}
+.sc-lbl{color:var(--muted);font-size:10px;letter-spacing:2px;margin-top:2px;text-transform:uppercase;}
 
-.payment-methods { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-.method-item {
-    background: var(--glass);
-    padding: 15px 8px;
-    border-radius: 12px;
-    text-align: center;
-    cursor: pointer;
-    border: 1px solid var(--border);
-    transition: all 0.2s;
+/* ===== INSPIRE ===== */
+#inspire{
+  position:fixed;inset:0;z-index:999;
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  background:var(--bg);
+  background-image:radial-gradient(ellipse at 30% 50%,rgba(245,166,35,0.08) 0%,transparent 55%);
+  transition:opacity .5s;padding:24px;text-align:center;
 }
-.method-item.active { border-color: var(--accent); background: rgba(0, 242, 255, 0.1); }
-.method-item i { font-size: 28px; margin-bottom: 5px; }
-.method-item.orange.active { border-color: var(--orange); background: rgba(255,121,0,0.1); }
-.method-item.wave.active { border-color: var(--wave); background: rgba(29,200,255,0.1); }
-.method-item.split.active { border-color: var(--perso); background: rgba(34,197,94,0.1); }
+#inspire.open{display:flex;}
+#inspire.hide{opacity:0;pointer-events:none;}
+.in-av{width:90px;height:90px;border-radius:50%;border:3px solid var(--gold);object-fit:cover;margin-bottom:14px;box-shadow:0 0 28px rgba(245,166,35,0.25);animation:fadeUp .6s ease-out both;}
+.in-av-ph{width:90px;height:90px;border-radius:50%;border:3px solid var(--gold);background:var(--bg4);display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:14px;animation:fadeUp .6s ease-out both;}
+.in-welcome{font-size:12px;color:var(--muted);letter-spacing:4px;text-transform:uppercase;margin-bottom:6px;animation:fadeUp .6s .1s ease-out both;}
+.in-name{font-family:'Orbitron',sans-serif;font-size:clamp(24px,5vw,32px);color:var(--gold);margin-bottom:4px;animation:fadeUp .6s .15s ease-out both;}
+.in-sub{font-size:15px;color:var(--text2);margin-bottom:36px;animation:fadeUp .6s .25s ease-out both;}
+.in-sub strong{color:var(--orange);}
+.in-cards{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:36px;animation:fadeUp .6s .35s ease-out both;}
+.in-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:16px 22px;text-align:center;min-width:100px;position:relative;overflow:hidden;}
+.in-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.in-card .ic-i{font-size:24px;margin-bottom:4px;}
+.in-card .ic-v{font-family:'Orbitron',sans-serif;font-size:22px;color:var(--gold);font-weight:700;}
+.in-card .ic-l{color:var(--muted);font-size:9px;letter-spacing:2px;margin-top:2px;text-transform:uppercase;}
+.in-enter{
+  background:linear-gradient(135deg,var(--gold),var(--orange));color:#000;border:none;
+  padding:14px 48px;border-radius:12px;font-family:'Inter',sans-serif;font-size:14px;
+  font-weight:700;cursor:pointer;letter-spacing:2px;
+  box-shadow:0 8px 24px rgba(245,166,35,0.3);transition:all .25s;
+  animation:fadeUp .6s .5s ease-out both;
+}
+.in-enter:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(245,166,35,0.45);}
 
-.btn {
-    width: 100%;
-    padding: 16px;
-    border-radius: 15px;
-    border: none;
-    background: var(--gradient);
-    color: white;
-    font-weight: bold;
-    font-size: 1.1rem;
-    cursor: pointer;
-    text-transform: uppercase;
-    box-shadow: 0 5px 15px rgba(194, 0, 251, 0.4);
-    transition: all 0.2s;
-}
-.btn:hover { transform: translateY(-1px); }
-.btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.btn-secondary { background: var(--glass); border: 1px solid var(--border); box-shadow: none; }
-.btn-danger { background: var(--danger); box-shadow: 0 5px 15px rgba(239,68,0.4); }
-.btn-warning { background: var(--warning); box-shadow: 0 5px 15px rgba(245,158,11,0.4); }
-.btn-success { background: var(--success); box-shadow: 0 5px 15px rgba(34,197,94,0.4); }
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
 
-.delivery-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.95);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    display: none;
+/* ===== HEADER ===== */
+#appHead{
+  background:var(--card);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:200;
 }
-.delivery-modal {
-    background: var(--card);
-    width: 100%;
-    max-width: 400px;
-    padding: 30px;
-    border-radius: 25px;
-    border: 1px solid var(--primary);
-    text-align: center;
-}
-.loading-ring {
-    width: 80px;
-    height: 80px;
-    border: 4px solid var(--glass);
-    border-top: 4px solid var(--accent);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 20px;
-}
-@keyframes spin { 100% { transform: rotate(360deg); } }
-.progress-bar {
-    width: 100%;
-    height: 8px;
-    background: var(--bg);
-    border-radius: 10px;
-    overflow: hidden;
-    margin: 20px 0;
-}
-.progress-fill {
-    height: 100%;
-    background: var(--gradient);
-    width: 0%;
-    transition: width 0.3s linear;
-    border-radius: 10px;
-}
-.steps-container { text-align: left; margin-top: 25px; }
-.step {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-    opacity: 0.3;
-    transition: 0.5s;
-}
-.step.active { opacity: 1; color: var(--accent); }
-.step i { font-size: 20px; width: 20px; }
+.hd-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:58px;gap:12px;}
+.hd-logo{font-family:'Orbitron',sans-serif;font-size:18px;color:var(--gold);letter-spacing:3px;white-space:nowrap;font-weight:900;}
+.hd-logo span{color:var(--orange);}
+.hd-r{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.live-dot{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:700;color:var(--red);letter-spacing:2px;text-transform:uppercase;}
+.live-dot::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--red);animation:ldp 1.5s infinite;}
+@keyframes ldp{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(230,57,70,.4);}50%{opacity:.6;box-shadow:0 0 0 5px rgba(230,57,70,0);}}
+.user-chip{display:flex;align-items:center;gap:7px;background:var(--bg4);border:1px solid var(--border);padding:4px 12px 4px 4px;border-radius:24px;}
+.user-chip img{width:28px;height:28px;border-radius:50%;border:2px solid var(--gold);object-fit:cover;}
+.user-chip span{font-size:13px;font-weight:600;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text);}
+/* Theme toggle */
+.theme-btn{background:var(--bg4);border:1px solid var(--border);color:var(--text);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}
+.theme-btn:hover{border-color:var(--gold);transform:rotate(20deg);}
+.btn-lo{background:none;border:1px solid rgba(230,57,70,.3);color:var(--red);padding:6px 12px;border-radius:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;transition:all .2s;}
+.btn-lo:hover{background:rgba(230,57,70,.1);}
 
-.invoice {
-    background: #020617;
-    padding: 20px;
-    border-radius: 12px;
-    border: 1px dashed var(--primary);
-    display: none;
-}
-#facture h2 { color: var(--primary); text-align: center; margin-bottom: 10px; }
-#facture h3 { color: var(--accent); text-align: center; margin: 15px 0 5px 0; }
-#facture hr { border: 1px solid var(--border); margin: 12px 0; }
+/* ===== HERO STATS ===== */
+.hero-band{background:var(--bg2);border-bottom:1px solid var(--border);padding:14px 20px;}
+.hero-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
+.hs{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px 12px;text-align:center;transition:border-color .2s;}
+.hs:hover{border-color:var(--border2);}
+.hs-v{font-family:'Orbitron',sans-serif;font-size:24px;color:var(--gold);font-weight:700;line-height:1;}
+.hs-l{color:var(--muted);font-size:9px;letter-spacing:2px;margin-top:5px;text-transform:uppercase;}
 
-.history-item {
-    background: var(--glass);
-    padding: 12px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    font-size: 0.85rem;
-    border-left: 3px solid var(--primary);
-}
-.history-item.suspended { border-left-color: var(--warning); }
-.history-item.blocked { border-left-color: var(--danger); }
+/* ===== NAV ===== */
+.nav-strip{background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:58px;z-index:150;overflow-x:auto;}
+.nav-in{max-width:1280px;margin:0 auto;display:flex;padding:0 20px;gap:0;min-width:max-content;}
+.nt{padding:12px 16px;cursor:pointer;font-size:12px;font-weight:600;letter-spacing:.5px;color:var(--muted);border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;display:flex;align-items:center;gap:5px;}
+.nt:hover{color:var(--text);}
+.nt.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tc{background:var(--bg4);border:1px solid var(--border);border-radius:10px;padding:1px 6px;font-size:9px;color:var(--muted);font-weight:700;}
+.nt.active .tc{background:rgba(245,166,35,0.12);color:var(--gold);border-color:rgba(245,166,35,0.3);}
 
-.admin-tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
-    overflow-x: auto;
-    padding-bottom: 5px;
-}
-.admin-tab {
-    background: var(--glass);
-    border: 1px solid var(--border);
-    padding: 10px 16px;
-    border-radius: 10px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.2s;
-}
-.admin-tab:hover { background: var(--card); }
-.admin-tab.active { background: var(--primary); border-color: var(--primary); color: #fff; }
-.admin-content { display: none; }
-.admin-content.active { display: block; animation: fadeIn 0.3s; }
+/* ===== MAIN ===== */
+#appMain{max-width:1280px;margin:0 auto;padding:24px 20px 80px;}
+.sec{display:none;animation:fadeUp .25s ease-out;}
+.sec.active{display:block;}
+.sec-title{font-family:'Orbitron',sans-serif;font-size:13px;color:var(--gold);letter-spacing:2px;margin-bottom:20px;display:flex;align-items:center;gap:10px;font-weight:700;}
+.sec-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);}
 
-.toggle-switch {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--glass);
-    padding: 12px;
-    border-radius: 10px;
-    margin: 8px 0;
-}
-.switch { position: relative; width: 50px; height: 26px; }
-.switch input { opacity: 0; width: 0; height: 0; }
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: var(--bg);
-    transition: .3s;
-    border-radius: 26px;
-}
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 18px; width: 18px;
-    left: 4px; bottom: 4px;
-    background-color: white;
-    transition: .3s;
-    border-radius: 50%;
-}
-input:checked +.slider { background-color: #22c55e; }
-input:checked +.slider:before { transform: translateX(24px); }
-.price-row {
-    display: grid;
-    grid-template-columns: 80px 1fr 1fr;
-    gap: 8px;
-    align-items: center;
-    margin: 8px 0;
-}
-.price-row label { font-size: 13px; }
-.stats-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin: 15px 0;
-}
-.stat-box {
-    background: var(--glass);
-    padding: 15px;
-    border-radius: 12px;
-    text-align: center;
-}
-.stat-value { font-size: 24px; font-weight: 700; font-family: 'Rajdhani'; }
-.stat-label { font-size: 11px; opacity: 0.7; margin-top: 4px; }
+/* ===== PODIUM ===== */
+.podium-wrap{margin-bottom:32px;}
+.podium{display:flex;align-items:flex-end;justify-content:center;gap:10px;padding:0 16px;}
+.p-slot{flex:1;max-width:200px;text-align:center;}
+.p-emoji{font-size:20px;margin-bottom:6px;}
+.p-block{border-radius:12px 12px 0 0;padding:16px 12px 20px;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.p-slot.rk1 .p-block{background:linear-gradient(180deg,rgba(255,215,0,.1),rgba(255,215,0,.03));border:1px solid rgba(255,215,0,.32);border-bottom:none;min-height:190px;}
+.p-slot.rk2 .p-block{background:linear-gradient(180deg,rgba(192,192,192,.07),rgba(192,192,192,.02));border:1px solid rgba(192,192,192,.18);border-bottom:none;min-height:155px;}
+.p-slot.rk3 .p-block{background:linear-gradient(180deg,rgba(205,127,50,.07),rgba(205,127,50,.02));border:1px solid rgba(205,127,50,.18);border-bottom:none;min-height:125px;}
+.p-logo{border-radius:50%;object-fit:cover;}
+.p-slot.rk1 .p-logo{width:72px;height:72px;border:3px solid #ffd700;box-shadow:0 0 20px rgba(255,215,0,.3);}
+.p-slot.rk2 .p-logo{width:58px;height:58px;border:2px solid #c0c0c0;}
+.p-slot.rk3 .p-logo{width:50px;height:50px;border:2px solid #cd7f32;}
+.p-nlogo{border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg4);}
+.p-slot.rk1 .p-nlogo{width:72px;height:72px;border:3px solid #ffd700;font-size:28px;}
+.p-slot.rk2 .p-nlogo{width:58px;height:58px;border:2px solid #c0c0c0;font-size:22px;}
+.p-slot.rk3 .p-nlogo{width:50px;height:50px;border:2px solid #cd7f32;font-size:18px;}
+.p-name{font-weight:700;font-size:13px;line-height:1.3;color:var(--text);}
+.p-pts{font-family:'Orbitron',sans-serif;color:var(--gold);font-size:14px;font-weight:700;}
 
-.promo-list-item {
-    background: var(--glass);
-    padding: 10px;
-    border-radius: 8px;
-    margin: 8px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 13px;
+/* ===== RANKED TEAM LIST (A. name / 1. player) ===== */
+.ranked-list{display:flex;flex-direction:column;gap:14px;}
+.rank-entry{
+  background:var(--bg3);border:1px solid var(--border);border-radius:14px;
+  overflow:hidden;transition:all .2s;
 }
-.promo-list-item.inactive { opacity: 0.5; }
+.rank-entry:hover{border-color:var(--border2);box-shadow:0 4px 20px var(--shadow);}
+/* Top rank entry gets gold left border */
+.rank-entry.rank-1{border-left:3px solid #ffd700;}
+.rank-entry.rank-2{border-left:3px solid #c0c0c0;}
+.rank-entry.rank-3{border-left:3px solid #cd7f32;}
+.rank-entry.rank-q{border-left:3px solid var(--green);}
+.rank-entry.rank-f{border-left:3px solid var(--gold);}
+.rank-entry.rank-w{border-left:3px solid #ffd700;}
+.rank-entry.rank-e{border-left:3px solid var(--red);opacity:.7;}
 
-.client-list-item {
-    background: var(--glass);
-    padding: 12px;
-    border-radius: 10px;
-    margin: 8px 0;
-    border-left: 3px solid var(--primary);
+/* Team header row */
+.re-team{
+  display:flex;align-items:center;gap:12px;padding:14px 18px;
+  border-bottom:1px solid var(--border);cursor:pointer;
+  background:var(--bg4);
 }
-.client-list-item.suspended { border-left-color: var(--warning); }
-.client-list-item.blocked { border-left-color: var(--danger); }
-.client-actions { display: flex; gap: 6px; margin-top: 8px; }
-.client-actions button { flex: 1; padding: 8px; font-size: 11px; }
-
-.alert {
-    padding: 12px;
-    border-radius: 10px;
-    font-size: 14px;
-    text-align: center;
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10000;
-    min-width: 280px;
+.re-team:hover{background:var(--bg5);}
+/* A. rank label */
+.re-rank-alpha{
+  font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;
+  min-width:36px;text-align:center;
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:8px;padding:5px 8px;
+  color:var(--gold);flex-shrink:0;
 }
-.alert-danger { background: rgba(239,68,0.95); color: #fff; }
-.alert-success { background: rgba(34,197,94,0.95); color: #fff; }
-.alert-warning { background: rgba(245,158,11,0.95); color: #fff; }
+.re-rank-alpha.r1{color:#ffd700;border-color:rgba(255,215,0,.3);background:rgba(255,215,0,.06);}
+.re-rank-alpha.r2{color:#c0c0c0;border-color:rgba(192,192,192,.3);background:rgba(192,192,192,.06);}
+.re-rank-alpha.r3{color:#cd7f32;border-color:rgba(205,127,50,.3);background:rgba(205,127,50,.06);}
+.re-logo{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--border);flex-shrink:0;}
+.re-nlogo{width:44px;height:44px;border-radius:50%;background:var(--bg5);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.re-team-info{flex:1;min-width:0;}
+.re-team-name{font-size:16px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.re-team-meta{display:flex;align-items:center;gap:10px;margin-top:3px;flex-wrap:wrap;}
+.re-pts{font-size:12px;font-weight:600;color:var(--gold);}
+.re-kills{font-size:12px;color:var(--red);}
+.re-chevron{color:var(--muted);font-size:12px;transition:transform .2s;flex-shrink:0;}
+.re-chevron.open{transform:rotate(180deg);}
 
-.hidden { display: none!important; }
-@media (max-width: 500px) {
-.platform-grid { grid-template-columns: repeat(2, 1fr); }
-.uc-grid { grid-template-columns: repeat(3, 1fr); }
-.payment-methods { grid-template-columns: repeat(2, 1fr); }
-.price-row { grid-template-columns: 60px 1fr 1fr; }
+/* Players sub-list */
+.re-players{padding:0;max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s;}
+.re-players.open{max-height:300px;padding:12px 18px 16px;}
+.re-player{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 12px;border-radius:8px;margin-bottom:6px;
+  background:var(--bg4);border:1px solid var(--border);
+}
+.re-player:last-child{margin-bottom:0;}
+.re-player-num{
+  font-size:12px;font-weight:700;color:var(--text2);
+  min-width:24px;text-align:center;
+}
+.re-player-name{font-size:14px;font-weight:500;color:var(--text);flex:1;}
+.cap-badge{background:rgba(245,166,35,.12);color:var(--gold);border:1px solid rgba(245,166,35,.25);padding:2px 7px;border-radius:8px;font-size:10px;font-weight:700;}
+
+/* ===== RANKING TABLE (desktop) ===== */
+.tbl-w{overflow-x:auto;border-radius:12px;border:1px solid var(--border);}
+table.mt{width:100%;border-collapse:collapse;}
+table.mt th{background:var(--bg4);color:var(--gold);font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:1.5px;padding:12px 14px;text-align:left;border-bottom:1px solid var(--border);font-weight:700;}
+table.mt td{padding:12px 14px;border-bottom:1px solid rgba(128,128,128,.08);vertical-align:middle;font-size:14px;color:var(--text);}
+table.mt tr:last-child td{border-bottom:none;}
+table.mt tbody tr:hover td{background:rgba(245,166,35,.03);}
+.tl{width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid var(--border);}
+.tnl{width:36px;height:36px;border-radius:50%;background:var(--bg4);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;}
+.tp{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;}
+.c1{color:#ffd700;}.c2{color:#c0c0c0;}.c3{color:#cd7f32;}
+.t-name-cell .tn{font-weight:700;font-size:14px;}
+.t-name-cell .tpl{color:var(--muted);font-size:11px;margin-top:2px;}
+.tpts{font-weight:700;color:var(--blue);}
+.tkills{font-weight:700;color:var(--red);}
+.ttot{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;color:var(--gold);}
+
+/* ===== BADGES ===== */
+.badge{display:inline-flex;align-items:center;gap:3px;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;}
+.bq{background:rgba(46,204,113,.1);color:var(--green);border:1px solid rgba(46,204,113,.25);}
+.bf{background:rgba(245,166,35,.1);color:var(--gold);border:1px solid rgba(245,166,35,.25);}
+.bw{background:rgba(255,215,0,.12);color:#ffd700;border:1px solid rgba(255,215,0,.3);}
+.be{background:rgba(230,57,70,.1);color:var(--red);border:1px solid rgba(230,57,70,.25);}
+.bp{background:rgba(90,99,120,.12);color:var(--muted);border:1px solid rgba(90,99,120,.22);}
+
+/* ===== REGISTER ===== */
+.rbox{max-width:540px;background:var(--bg3);border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+.rh{padding:20px 24px;background:var(--bg4);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;}
+.rh-icon{font-size:24px;}
+.rh-title{font-family:'Orbitron',sans-serif;font-size:12px;color:var(--gold);letter-spacing:2px;font-weight:700;}
+.rh-sub{color:var(--muted);font-size:12px;margin-top:2px;}
+.rb{padding:24px;}
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:16px;}
+.fg label{font-size:11px;color:var(--muted);letter-spacing:.5px;font-weight:600;text-transform:uppercase;}
+.fg input{
+  background:var(--bg4);border:1px solid var(--border);color:var(--text);
+  padding:11px 14px;border-radius:10px;font-size:14px;
+  font-family:'Inter',sans-serif;outline:none;transition:border-color .2s,box-shadow .2s;
+}
+.fg input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,166,35,.08);}
+.fg input[type="file"]{padding:9px 12px;cursor:pointer;font-size:12px;}
+.lpw{display:flex;align-items:center;gap:12px;margin-top:8px;}
+.lprev{width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);display:none;}
+.lhint{color:var(--muted);font-size:12px;}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.rsub{
+  width:100%;background:linear-gradient(135deg,var(--gold),var(--orange));color:#000;
+  border:none;padding:13px;border-radius:11px;font-family:'Inter',sans-serif;
+  font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;
+  transition:all .25s;margin-top:8px;box-shadow:0 6px 20px rgba(245,166,35,.18);
+}
+.rsub:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(245,166,35,.3);}
+.rsub:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+
+/* ===== MY TEAM ===== */
+.mtwrap{max-width:620px;}
+.mtcard{background:var(--bg3);border:2px solid var(--gold);border-radius:16px;overflow:hidden;box-shadow:0 0 40px rgba(245,166,35,.06);}
+.mtbanner{background:var(--bg4);padding:24px;display:flex;align-items:center;gap:16px;border-bottom:1px solid var(--border);}
+.mtlg{width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid var(--gold);box-shadow:0 0 18px rgba(245,166,35,.25);flex-shrink:0;}
+.mtnlg{width:80px;height:80px;border-radius:50%;background:var(--bg5);border:3px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0;}
+.mtinfo .mtn{font-family:'Orbitron',sans-serif;font-size:18px;color:var(--gold);margin-bottom:3px;font-weight:700;}
+.mtinfo .mtr{color:var(--muted);font-size:12px;margin-bottom:6px;}
+.mtbody{padding:20px 24px;}
+.mtstats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
+.mts{background:var(--bg4);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border);}
+.mts-v{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:700;}
+.mts-l{color:var(--muted);font-size:9px;letter-spacing:2px;margin-top:3px;text-transform:uppercase;}
+.roster-t{font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;font-weight:700;}
+/* My team players using same A./1. format */
+.mt-team-entry{
+  background:var(--bg4);border:1px solid var(--gold);border-radius:12px;
+  overflow:hidden;margin-bottom:12px;
+}
+.mt-team-head{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border);}
+.mt-team-a{font-family:'Orbitron',sans-serif;font-size:12px;color:var(--gold);font-weight:700;background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.2);padding:4px 8px;border-radius:6px;}
+.mt-team-name{font-size:15px;font-weight:700;color:var(--text);}
+.mt-players-body{padding:10px 16px 14px;}
+.mt-player{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:8px;margin-bottom:5px;background:var(--bg3);border:1px solid var(--border);}
+.mt-player:last-child{margin-bottom:0;}
+.mt-player-n{font-size:12px;color:var(--text2);font-weight:700;min-width:22px;text-align:center;}
+.mt-player-name{font-size:14px;font-weight:500;color:var(--text);flex:1;}
+
+/* ===== MATCHES ===== */
+.mi{background:var(--bg3);border:1px solid var(--border);border-radius:12px;margin-bottom:14px;overflow:hidden;}
+.mih{background:var(--bg4);padding:12px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;}
+.mi-num{font-family:'Orbitron',sans-serif;font-size:13px;color:var(--gold);font-weight:700;}
+.mi-phase{color:var(--muted);font-size:11px;}
+.mi-date{color:var(--muted);font-size:11px;}
+.mig{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1px;background:var(--border);}
+.mir{background:var(--bg3);padding:10px 14px;display:flex;align-items:center;gap:8px;}
+.mr-rank{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:900;min-width:28px;}
+.mr1{color:#ffd700;}.mr2{color:#c0c0c0;}.mr3{color:#cd7f32;}.mro{color:var(--muted);}
+.mr-lg{width:26px;height:26px;border-radius:50%;object-fit:cover;border:1px solid var(--border);}
+.mr-nlg{width:26px;height:26px;border-radius:50%;background:var(--bg4);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;}
+.mr-nm{font-size:12px;font-weight:600;color:var(--text);}
+.mr-kl{color:var(--red);font-size:10px;margin-top:1px;}
+
+/* ===== EMPTY ===== */
+.empty{text-align:center;padding:56px 24px;color:var(--muted);}
+.empty .ei{font-size:44px;display:block;margin-bottom:12px;}
+.empty p{font-size:15px;}
+
+/* ===== TOAST ===== */
+#toast{position:fixed;bottom:24px;right:24px;z-index:9999;background:var(--green);color:#000;padding:12px 20px;border-radius:10px;font-weight:700;font-size:14px;opacity:0;transform:translateY(12px);transition:all .3s;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,.25);}
+#toast.show{opacity:1;transform:none;}
+#toast.err{background:var(--red);color:#fff;}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:var(--bg2);}
+::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:var(--gold);}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+  .hero-inner{grid-template-columns:repeat(3,1fr);}
+}
+@media(max-width:768px){
+  .hero-inner{grid-template-columns:repeat(2,1fr);}
+  .hd-inner{padding:0 14px;height:54px;}
+  .hd-logo{font-size:16px;}
+  #appMain{padding:16px 14px 72px;}
+  .pgrid{grid-template-columns:1fr;}
+  .mtstats{grid-template-columns:1fr 1fr;}
+  .podium{gap:6px;padding:0 8px;}
+  .user-chip span{max-width:80px;}
+}
+@media(max-width:480px){
+  .hero-inner{grid-template-columns:1fr 1fr;}
+  .splash-logo{font-size:34px;}
+  .splash-counts{gap:24px;}
+  .in-cards{gap:8px;}
+  .in-card{padding:12px 16px;min-width:80px;}
+  .mtstats{grid-template-columns:1fr 1fr 1fr;}
 }
 </style>
 </head>
 <body>
 
-<div class="header" id="mainHeader">
-    <h1 id="headerTitle"><i class="fa-solid fa-bolt"></i> ASG UC SHOP PRO</h1>
-    <p id="headerSubtitle" style="color: var(--accent)">PUBG • Free Fire • CODM • Perso</p>
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-glow"></div>
+  <div class="splash-logo">PUBG<span>MALI 🇲🇱</span></div>
+  <div class="splash-sub">Compétition Officielle 2026</div>
+  <div class="splash-line"></div>
+  <div class="splash-tagline">La  compétition officielle<strong>
+     PUBG du MALI</strong>
+     Bienvenue tout le Malien</div>
+  <button class="g-btn" onclick="gSignIn()">
+    <svg width="20" height="20" viewBox="0 0 18 18">
+      <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/>
+      <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/>
+      <path fill="#FBBC05" d="M3.964 10.706A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.706V4.962H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.038l3.007-2.332z"/>
+      <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.962L3.964 7.294C4.672 5.163 6.656 3.58 9 3.58z"/>
+    </svg>
+    Se connecter avec Google
+  </button>
+  <p class="splash-note">Connexion requise pour accéder à la plateforme et inscrire votre équipe.</p>
+  <div class="splash-counts">
+    <div class="sc-item"><div class="sc-val" id="sp-t">—</div><div class="sc-lbl">Équipes</div></div>
+    <div class="sc-item"><div class="sc-val" id="sp-m">—</div><div class="sc-lbl">Matchs</div></div>
+    <div class="sc-item"><div class="sc-val">25</div><div class="sc-lbl">Max</div></div>
+  </div>
 </div>
 
-<div class="container">
-    <!-- VUE 0: MENU PRINCIPAL -->
-    <div class="view active" id="viewMenu">
-        <div class="card">
-            <div class="card-title"><i class="fa-solid fa-gamepad"></i> Choisir une plateforme</div>
-            <div class="platform-grid" id="platformGrid">
-                <div class="platform-btn pubg" data-game="pubg">
-                    <div class="platform-icon"></div>
-                    <div>PUBG MOBILE</div>
-                </div>
-                <div class="platform-btn ff" data-game="ff">
-                    <div class="platform-icon"></div>
-                    <div>FREE FIRE</div>
-                </div>
-                <div class="platform-btn codm" data-game="codm">
-                    <div class="platform-icon"></div>
-                    <div>COD MOBILE</div>
-                </div>
-                <div class="platform-btn perso" data-game="perso">
-                    <div class="platform-icon"></div>
-                    <div>PERSO</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-title"><i class="fa-solid fa-clock-rotate-left"></i> Historique récent</div>
-            <div id="historyList">
-                <p style="font-size:0.8rem; color:var(--text-muted)">Aucune transaction.</p>
-            </div>
-        </div>
-
-        <div style="text-align:center; padding: 20px;">
-            <button class="btn btn-secondary" id="adminAccessBtn">
-                <i class="fa-solid fa-shield-halved"></i> Panel Admin
-            </button>
-            <p style="opacity: 0.5; font-size:10px; margin-top:10px;">© 2026 ASG UC SHOP</p>
-        </div>
-    </div>
-
-    <!-- VUE 1: CHOIX PACK -->
-    <div class="view" id="viewPack">
-        <button class="btn-back" id="backToMenu1"><i class="fa-solid fa-arrow-left"></i> Menu</button>
-        <div class="card">
-            <div class="steps-indicator">
-                <div class="step-dot active"></div>
-                <div class="step-dot"></div>
-                <div class="step-dot"></div>
-            </div>
-            <div class="card-title" style="margin-left:50px;"><i class="fa-solid fa-user"></i> Étape 1 : Infos compte</div>
-            <div style="position:relative;">
-                <input id="playerID" type="text" placeholder="ID Joueur" inputmode="numeric" maxlength="16">
-                <div id="idHelper" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--text-muted);pointer-events:none;"></div>
-            </div>
-            <div id="idError" style="font-size:12px;color:var(--danger);margin:-5px 0 10px 5px;display:none;"></div>
-            <input id="clientEmail" type="email" placeholder="Email client (optionnel) - Pour recevoir la facture" style="font-size:13px;">
-            <input id="customQty" type="number" placeholder="Quantité personnalisée" class="hidden" inputmode="numeric">
-            <label style="font-size:13px;color:var(--text-muted);margin:15px 0 5px;display:block;" id="packLabel">Choisis ton pack :</label>
-            <div class="uc-grid" id="ucGrid"></div>
-            <button class="btn" id="goToPaymentBtn" style="margin-top:20px; display:none;">
-                Suivant <i class="fa-solid fa-arrow-right"></i>
-            </button>
-        </div>
-    </div>
-
-    <!-- VUE 2: PAIEMENT -->
-    <div class="view" id="viewPayment">
-        <button class="btn-back" id="backToPack"><i class="fa-solid fa-arrow-left"></i> Retour</button>
-        <div class="card">
-            <div class="steps-indicator">
-                <div class="step-dot"></div>
-                <div class="step-dot active"></div>
-                <div class="step-dot"></div>
-            </div>
-            <div class="card-title" style="margin-left:50px;"><i class="fa-solid fa-wallet"></i> Étape 2 : Paiement</div>
-
-            <div class="promo-box" id="promoBox">
-                <div class="flex-row">
-                    <input id="promoInput" type="text" placeholder="Code promo" style="margin:0; text-transform:uppercase;">
-                    <button class="btn" style="width:120px; padding:14px;" id="applyPromoBtn">Appliquer</button>
-                </div>
-            </div>
-            <div class="promo-applied hidden" id="promoApplied">
-                <span><i class="fa-solid fa-tag"></i> <b id="promoCodeTxt"></b> appliqué</span>
-                <span id="promoRemove" style="cursor:pointer; color:var(--danger);"><i class="fa-solid fa-xmark"></i></span>
-            </div>
-
-            <input id="price" readonly placeholder="Prix en XOF">
-            <input id="priceFinal" readonly placeholder="Prix final" class="hidden" style="color:var(--success); font-weight:700;">
-
-            <div class="payment-methods" style="margin-top:15px;">
-                <div class="method-item orange" data-method="orange">
-                    <i class="fa-solid fa-mobile-screen" style="color:var(--orange);"></i>
-                    <div style="font-size:12px;">Orange Money</div>
-                </div>
-                <div class="method-item wave" data-method="wave">
-                    <i class="fa-solid fa-water" style="color:var(--wave);"></i>
-                    <div style="font-size:12px;">Wave</div>
-                </div>
-                <div class="method-item" data-method="card">
-                    <i class="fa-solid fa-credit-card"></i>
-                    <div style="font-size:12px;">Carte</div>
-                </div>
-                <div class="method-item split" data-method="split">
-                    <i class="fa-solid fa-percent" style="color:var(--perso);"></i>
-                    <div style="font-size:12px;">50/50</div>
-                </div>
-            </div>
-
-            <div id="payDetails" class="hidden">
-                <div id="mobileGroup">
-                    <div class="flex-row">
-                        <select id="indicatif" style="width:45%;">
-                            <option value="+223">🇲🇱 +223</option>
-                            <option value="+221">🇸🇳 +221</option>
-                            <option value="+225">🇨🇮 +225</option>
-                            <option value="+226">🇧🇫 +226</option>
-                            <option value="+227">🇳🇪 +227</option>
-                            <option value="+224">🇬🇳 +224</option>
-                            <option value="+228">🇹🇬 +228</option>
-                            <option value="+229">🇧🇯 +229</option>
-                            <option value="+237">🇨🇲 +237</option>
-                        </select>
-                        <input id="phoneNum" type="tel" placeholder="Numéro" inputmode="numeric" maxlength="10" style="width:55%;">
-                    </div>
-                    <div id="splitSecond" class="hidden">
-                        <label style="font-size:12px;opacity:0.7;margin-top:10px;display:block;">2ème méthode (50%)</label>
-                        <div class="flex-row">
-                            <select id="indicatif2" style="width:45%;">
-                                <option value="+223">🇲🇱 +223</option>
-                                <option value="+221">🇸🇳 +221</option>
-                                <option value="+225">🇨🇮 +225</option>
-                            </select>
-                            <input id="phoneNum2" type="tel" placeholder="Numéro" inputmode="numeric" maxlength="10" style="width:55%;">
-                        </div>
-                    </div>
-                </div>
-
-                <div id="cardGroup" class="hidden">
-                    <input id="cardNum" type="text" placeholder="Numéro de carte" inputmode="numeric" maxlength="19">
-                    <div class="flex-row">
-                        <input id="cardExp" type="text" placeholder="MM/AA" inputmode="numeric" maxlength="5" style="width:50%;">
-                        <input id="cardCvv" type="text" placeholder="CVC" inputmode="numeric" maxlength="3" style="width:50%;">
-                    </div>
-                    <p style="font-size:11px;color:#f87171;margin-top:5px;"><i class="fa-solid fa-triangle-exclamation"></i> Démo : utilise vraie passerelle en prod</p>
-                </div>
-
-                <button class="btn" style="margin-top:20px" id="payBtn">
-                    <i class="fa-solid fa-lock"></i> Payer <span id="btnPrice"></span> FCFA
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- VUE 3: FACTURE -->
-    <div class="view" id="viewInvoice">
-        <button class="btn-back" id="backToMenu2"><i class="fa-solid fa-arrow-left"></i> Menu</button>
-        <div class="card">
-            <div class="steps-indicator">
-                <div class="step-dot"></div>
-                <div class="step-dot"></div>
-                <div class="step-dot active"></div>
-            </div>
-            <div class="card-title" style="margin-left:50px;"><i class="fa-solid fa-circle-check"></i> Livraison confirmée</div>
-
-            <div class="invoice" id="invoiceBox" style="display:block;">
-                <div id="facture"></div>
-            </div>
-
-            <div class="flex-row" style="margin-top:15px;">
-                <button class="btn" style="background:#3b82f6;" id="pdfBtn">
-                    <i class="fa-solid fa-file-arrow-down"></i> PDF
-                </button>
-                <button class="btn" style="background:#22c55e;" id="whatsappBtn">
-                    <i class="fa-brands fa-whatsapp"></i> WhatsApp
-                </button>
-            </div>
-            <button class="btn btn-secondary" style="margin-top:10px;" id="newOrderBtn">
-                <i class="fa-solid fa-plus"></i> Nouvelle commande
-            </button>
-        </div>
-    </div>
-
-    <!-- VUE 4: ADMIN -->
-    <div class="view" id="viewAdmin">
-        <button class="btn-close" id="closeAdmin"><i class="fa-solid fa-xmark"></i> Fermer</button>
-
-        <div class="card" id="adminLogin">
-            <div class="card-title" style="margin-left:50px;"><i class="fa-solid fa-lock"></i> Connexion Admin</div>
-            <input id="adminEmail" placeholder="Email">
-            <input id="adminPass" type="password" placeholder="Mot de passe">
-            <button class="btn" id="adminLoginBtn">Connexion</button>
-        </div>
-
-        <div class="card hidden" id="adminPanel">
-            <div class="card-title"><i class="fa-solid fa-shield-halved"></i> Panel Admin</div>
-
-            <div class="admin-tabs">
-                <div class="admin-tab active" data-tab="stats"><i class="fa-solid fa-chart-line"></i> Stats</div>
-                <div class="admin-tab" data-tab="factures"><i class="fa-solid fa-file-invoice"></i> Factures</div>
-                <div class="admin-tab" data-tab="promos"><i class="fa-solid fa-tags"></i> Promos</div>
-                <div class="admin-tab" data-tab="platforms"><i class="fa-solid fa-gamepad"></i> Plateformes</div>
-                <div class="admin-tab" data-tab="prices"><i class="fa-solid fa-coins"></i> Prix</div>
-                <div class="admin-tab" data-tab="clients"><i class="fa-solid fa-users"></i> Clients</div>
-                <div class="admin-tab" data-tab="pending"><i class="fa-solid fa-clock"></i> Attente</div>
-            </div>
-
-            <!-- TAB STATS -->
-            <div class="admin-content active" id="tab-stats">
-                <h4 style="margin:15px 0 10px 0;color:var(--primary);"><i class="fa-solid fa-chart-line"></i> Statistiques Semaine</h4>
-                <div class="stats-grid">
-                    <div class="stat-box">
-                        <div class="stat-value" id="statCAWeek">0</div>
-                        <div class="stat-label">CA Cette Semaine</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-value" id="statCmdWeek">0</div>
-                        <div class="stat-label">Commandes</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-value" id="statCA">0</div>
-                        <div class="stat-label">CA Total</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-value" id="statCmd">0</div>
-                        <div class="stat-label">Total Cmd</div>
-                    </div>
-                </div>
-                <div class="flex-row">
-                    <button class="btn" style="background:#3b82f6;" id="exportCsvBtn">
-                        <i class="fa-solid fa-file-csv"></i> Export CSV
-                    </button>
-                    <button class="btn btn-success" id="whatsappHelpBtn">
-                        <i class="fa-brands fa-whatsapp"></i> Aide Client
-                    </button>
-                </div>
-            </div>
-
-            <!-- TAB FACTURES - NOUVEAU -->
-            <div class="admin-content" id="tab-factures">
-                <h4 style="margin:15px 0 10px 0;color:var(--primary);"><i class="fa-solid fa-file-invoice"></i> Factures Clients</h4>
-                <div class="stats-grid" style="margin-bottom:15px;">
-                    <div class="stat-box">
-                        <div class="stat-value" id="factureCA">0</div>
-                        <div class="stat-label">CA Facturé</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-value" id="factureNb">0</div>
-                        <div class="stat-label">Nb Factures</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-value" id="factureAvg">0</div>
-                        <div class="stat-label">Panier Moyen</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-value" id="factureMail">0</div>
-                        <div class="stat-label">Emails Envoyés</div>
-                    </div>
-                </div>
-                <input id="searchFacture" type="text" placeholder="🔍 Rechercher ID, code, jeu, montant..." style="margin-bottom:15px;">
-                <div class="flex-row" style="margin-bottom:15px;">
-                    <select id="filterGameFacture" style="width:50%;">
-                        <option value="">Tous les jeux</option>
-                        <option value="pubg">PUBG Mobile</option>
-                        <option value="ff">Free Fire</option>
-                        <option value="codm">COD Mobile</option>
-                        <option value="perso">Perso</option>
-                    </select>
-                    <select id="filterStatusFacture" style="width:50%;">
-                        <option value="">Tous statuts</option>
-                        <option value="delivered">Livré</option>
-                        <option value="pending">En attente</option>
-                    </select>
-                </div>
-                <div id="facturesList" style="max-height:400px;overflow-y:auto;"></div>
-                <button class="btn btn-secondary" style="margin-top:15px;" id="exportFacturesBtn">
-                    <i class="fa-solid fa-file-csv"></i> Export Factures CSV
-                </button>
-            </div>
-
-            <!-- TAB PROMOS -->
-            <div class="admin-content" id="tab-promos">
-                <h4 style="margin:15px 0 10px 0;color:var(--primary);"><i class="fa-solid fa-tags"></i> Codes Promo</h4>
-                <div class="flex-row">
-                    <input id="newPromoCode" placeholder="CODE" style="text-transform:uppercase;">
-                    <input id="newPromoValue" type="number" placeholder="%" inputmode="numeric" style="width:100px;">
-                    <button class="btn" style="width:100px;" id="addPromoBtn"><i class="fa-solid fa-plus"></i></button>
-                </div>
-                <div id="promoList"></div>
-            </div>
-
-            <!-- TAB PLATFORMS -->
-            <div class="admin-content" id="tab-platforms">
-                <h4 style="margin:15px 0 10px 0;color:var(--primary);"><i class="fa-solid fa-gamepad"></i> Plateformes</h4>
-                <div class="toggle-switch">
-                    <label><i class="fa-solid fa-bullseye" style="color:var(--pubg);"></i> PUBG</label>
-                    <label class="switch"><input type="checkbox" id="togglePubg" checked><span class="slider"></span></label>
-                </div>
-                <div class="toggle-switch">
-                    <label><i class="fa-solid fa-fire" style="color:var(--ff);"></i> Free Fire</label>
-                    <label class="switch"><input type="checkbox" id="toggleFF" checked><span class="slider"></span></label>
-                </div>
-                <div class="toggle-switch">
-                    <label><i class="fa-solid fa-gun" style="color:var(--codm);"></i> CODM</label>
-                    <label class="switch"><input type="checkbox" id="toggleCODM" checked><span class="slider"></span></label>
-                </div>
-                <div class="toggle-switch">
-                    <label><i class="fa-solid fa-star" style="color:var(--perso);"></i> Perso</label>
-                    <label class="switch"><input type="checkbox" id="togglePerso" checked><span class="slider"></span></label>
-                </div>
-            </div>
-
-            <!-- TAB PRICES -->
-            <div class="admin-content" id="tab-prices">
-                <h4 style="margin:15px 0 10px 0;color:var(--primary);"><i class="fa-solid fa-coins"></i> Gestion des Prix</h4>
-                <select id="priceGameSelect" style="margin-bottom:15px;">
-                    <option value="pubg">PUBG Mobile - UC</option>
-                    <option value="ff">Free Fire - Diamants</option>
-                    <option value="codm">COD Mobile - CP</option>
-                    <option value="perso">Perso - Custom</option>
-                </select>
-                <div id="priceEditor"></div>
-                <div class="flex-row" style="margin-top:15px;">
-                    <button class="btn btn-success" id="savePricesBtn"><i class="fa-solid fa-floppy-disk"></i> Sauvegarder</button>
-                    <button class="btn btn-warning" id="resetPricesBtn"><i class="fa-solid fa-rotate-left"></i> Reset</button>
-                </div>
-            </div>
-
-            <!-- TAB CLIENTS -->
-            <div class="admin-content" id="tab-clients">
-                <h4 style="margin:15px 0 10px 0;color:var(--primary);"><i class="fa-solid fa-users"></i> Gestion Clients</h4>
-                <input id="blockInput" placeholder="ID joueur">
-                <div class="flex-row">
-                    <button class="btn btn-warning" id="suspendBtn"><i class="fa-solid fa-pause"></i> Suspendre</button>
-                    <button class="btn btn-danger" id="blockBtn"><i class="fa-solid fa-ban"></i> Bloquer</button>
-                    <button class="btn btn-success" id="unblockBtn"><i class="fa-solid fa-check"></i> Débloquer</button>
-                </div>
-                <h5 style="margin:15px 0 8px;font-size:13px;">Clients suspendus</h5>
-                <div id="suspendedList"></div>
-                <h5 style="margin:15px 0 8px;font-size:13px;">Clients bloqués</h5>
-                <div id="blockedList"></div>
-            </div>
-
-            <!-- TAB PENDING -->
-            <div class="admin-content" id="tab-pending">
-                <h4 style="margin:15px 0 10px 0;color:var(--primary);"><i class="fa-solid fa-clock"></i> En attente de validation</h4>
-                <div id="pendingList" style="max-height:300px;overflow-y:auto;"></div>
-            </div>
-        </div>
-    </div>
+<!-- INSPIRE -->
+<div id="inspire">
+  <div id="inAvWrap"></div>
+  <div class="in-welcome">Bienvenue sur PUBG Mali 🇲🇱</div>
+  <div class="in-name" id="inName">—</div>
+  <div class="in-sub">Prêt à dominer ? <strong>Bonne chance !</strong> 🎮</div>
+  <div class="in-cards">
+    <div class="in-card"><div class="ic-i">🏆</div><div class="ic-v" id="ic-t">0</div><div class="ic-l">Équipes</div></div>
+    <div class="in-card"><div class="ic-i">👥</div><div class="ic-v" id="ic-p">0</div><div class="ic-l">Joueurs</div></div>
+    <div class="in-card"><div class="ic-i">✅</div><div class="ic-v" id="ic-q">0</div><div class="ic-l">Qualifiés</div></div>
+    <div class="in-card"><div class="ic-i">🎯</div><div class="ic-v" id="ic-m">0</div><div class="ic-l">Matchs</div></div>
+  </div>
+  <button class="in-enter" onclick="enterApp()">Accéder à la plateforme ▶</button>
 </div>
 
-<!-- ÉCRAN DE LIVRAISON -->
-<div class="delivery-overlay" id="deliveryOverlay">
-    <div class="delivery-modal">
-        <div class="loading-ring"></div>
-        <h3 id="deliveryTitle">Livraison en cours...</h3>
-        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-        <p id="deliveryStatus" style="opacity:0.8;font-size:0.9rem;">Initialisation...</p>
-        <div class="steps-container">
-            <div class="step" id="step1"><i class="fa-solid fa-circle"></i> Vérification du paiement</div>
-            <div class="step" id="step2"><i class="fa-solid fa-circle"></i> Vérification ID joueur</div>
-            <div class="step" id="step3"><i class="fa-solid fa-circle"></i> Connexion au serveur</div>
-            <div class="step" id="step4"><i class="fa-solid fa-circle"></i> Envoi des ressources</div>
-            <div class="step" id="step5"><i class="fa-solid fa-circle"></i> Livraison confirmée</div>
-        </div>
+<!-- APP -->
+<div id="appWrap" style="display:none;">
+  <header id="appHead">
+    <div class="hd-inner">
+      <div class="hd-logo">PUBG<span>🇲🇱</span></div>
+      <div class="hd-r">
+        <div class="live-dot">Live</div>
+        <button class="theme-btn" onclick="toggleTheme()" id="themeBtn" title="Mode sombre/clair">🌙</button>
+        <div class="user-chip"><img id="uav" src="" alt=""/><span id="unm"></span></div>
+        <button class="btn-lo" onclick="gSignOut()">🔐</button>
+      </div>
     </div>
+  </header>
+
+  <div class="hero-band">
+    <div class="hero-inner">
+      <div class="hs"><div class="hs-v" id="h-t">0</div><div class="hs-l">Équipes</div></div>
+      <div class="hs"><div class="hs-v" id="h-p">0</div><div class="hs-l">Joueurs</div></div>
+      <div class="hs"><div class="hs-v" id="h-q">0</div><div class="hs-l">Qualifiés</div></div>
+      <div class="hs"><div class="hs-v" id="h-f">0</div><div class="hs-l">Finalistes</div></div>
+      <div class="hs"><div class="hs-v" id="h-m">0</div><div class="hs-l">Matchs</div></div>
+    </div>
+  </div>
+
+  <div class="nav-strip">
+    <div class="nav-in">
+      <div class="nt active" onclick="goTab('classement')">🥇 Classement</div>
+      <div class="nt" onclick="goTab('toutes')">🏆 Équipes <span class="tc" id="tc-a">0</span></div>
+      <div class="nt" onclick="goTab('qualifies')">✅ Qualifiés <span class="tc" id="tc-q">0</span></div>
+      <div class="nt" onclick="goTab('nonqualifies')">❌ Non Qualifiés <span class="tc" id="tc-nq">0</span></div>
+      <div class="nt" onclick="goTab('finale')">🏅 Finale <span class="tc" id="tc-f">0</span></div>
+      <div class="nt" onclick="goTab('gagnants')">👑 Gagnants <span class="tc" id="tc-w">0</span></div>
+      <div class="nt" onclick="goTab('matchs')">🎯 Matchs</div>
+      <div class="nt" onclick="goTab('inscription')">📝 Inscription</div>
+      <div class="nt" onclick="goTab('monequipe')">👤 Mon Équipe</div>
+    </div>
+  </div>
+
+  <div id="appMain">
+    <!-- CLASSEMENT -->
+    <div class="sec active" id="sec-classement">
+      <div class="sec-title">Classement Général</div>
+      <div class="podium-wrap" id="podiumWrap"></div>
+      <div class="ranked-list" id="rankList"></div>
+    </div>
+
+    <!-- TOUTES -->
+    <div class="sec" id="sec-toutes">
+      <div class="sec-title">Toutes les Équipes</div>
+      <div class="ranked-list" id="allList"></div>
+    </div>
+
+    <!-- QUALIFIÉS -->
+    <div class="sec" id="sec-qualifies">
+      <div class="sec-title">✅ Équipes Qualifiées</div>
+      <div class="ranked-list" id="qualifList"></div>
+    </div>
+
+    <!-- NON QUALIFIÉS -->
+    <div class="sec" id="sec-nonqualifies">
+      <div class="sec-title">❌ Équipes Non Qualifiées</div>
+      <div class="ranked-list" id="nonQualifList"></div>
+    </div>
+
+    <!-- FINALE -->
+    <div class="sec" id="sec-finale">
+      <div class="sec-title">🏅 Équipes en Finale</div>
+      <div class="ranked-list" id="finaleList"></div>
+    </div>
+
+    <!-- GAGNANTS -->
+    <div class="sec" id="sec-gagnants">
+      <div class="sec-title">👑 Vainqueurs</div>
+      <div class="ranked-list" id="gagList"></div>
+    </div>
+
+    <!-- MATCHS -->
+    <div class="sec" id="sec-matchs">
+      <div class="sec-title">Résultats des Matchs</div>
+      <div id="matchsList"></div>
+    </div>
+
+    <!-- INSCRIPTION -->
+    <div class="sec" id="sec-inscription">
+      <div id="regContent"></div>
+    </div>
+
+    <!-- MON ÉQUIPE -->
+    <div class="sec" id="sec-monequipe">
+      <div id="myTeamContent"></div>
+    </div>
+  </div>
 </div>
+
+<div id="toast"></div>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+const cfg={apiKey:"AIzaSyDGfv1vjNX_x5NZ0EApb4ThK-A42UhVUVc",authDomain:"pubg-8424e.firebaseapp.com",databaseURL:"https://pubg-8424e-default-rtdb.firebaseio.com",projectId:"pubg-8424e",storageBucket:"pubg-8424e.firebasestorage.app",messagingSenderId:"922883431213",appId:"1:922883431213:web:d6e5f5cb1ab7c288cb11a4"};
+const app=initializeApp(cfg);
+const db=getDatabase(app);
+const auth=getAuth(app);
+const prov=new GoogleAuthProvider();
+window._db=db;window._ref=ref;window._set=set;
+window._auth=auth;window._prov=prov;
+window._gIn=()=>signInWithPopup(auth,prov);
+window._gOut=()=>signOut(auth);
+onValue(ref(db,'teams'),s=>{
+  window.TD=s.val()||{};
+  const n=Object.keys(window.TD).length;
+  const sp=document.getElementById('sp-t');if(sp)sp.textContent=n;
+  window.dispatchEvent(new Event('du'));
+});
+onValue(ref(db,'matches'),s=>{
+  window.MD=s.val()||{};
+  const sp=document.getElementById('sp-m');if(sp)sp.textContent=Object.keys(window.MD).length;
+  window.dispatchEvent(new Event('du'));
+});
+onAuthStateChanged(auth,u=>{window.CU=u;window.dispatchEvent(new CustomEvent('ac',{detail:u}));});
+window.dispatchEvent(new Event('fbr'));
+</script>
 
 <script>
-// --- CONSTANTES & CONFIG ---
-const PAYMENT_NUMBER = "+22382131418";
-const PAYMENT_NAME = "ASG SHOP";
-const ADMIN_EMAIL = "asgshop02@gmail.com";
-const ADMIN_PASS = "Adou8213";
-const WHATSAPP = "22370340086";
+window.TD=window.TD||{};window.MD=window.MD||{};
+let curTab='classement',logoB64=null,entered=false;
 
-const PACKS = {
-    pubg: { name: "UC", icon: "", packs: {"60":800,"120":1600,"180":2400,"325":3200,"660":7000,"1800":12000,"3850":25000,"8100":50000} },
-    ff: { name: "Diamants", icon: "💎", packs: {"100":600,"210":1200,"530":2800,"1080":5500,"2200":11000,"5600":27000} },
-    codm: { name: "CP", icon: "⚔️", packs: {"80":800,"420":4000,"880":8000,"2400":20000,"5000":40000,"10800":80000} },
-    perso: { name: "Points", icon: "⭐", packs: {"100":500,"500":2000,"1000":3500,"5000":15000} }
+/* ===== THEME ===== */
+const savedTheme=localStorage.getItem('pubgmali-theme')||'dark';
+document.documentElement.setAttribute('data-theme',savedTheme);
+window.toggleTheme=function(){
+  const cur=document.documentElement.getAttribute('data-theme');
+  const next=cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  localStorage.setItem('pubg mali-theme',next);
+  const btn=document.getElementById('themeBtn');
+  if(btn)btn.textContent=next==='dark'?'🌙':'☀️';
 };
-
-// --- VARIABLES GLOBALES ---
-let blockedUsers = JSON.parse(localStorage.getItem("blockedUsers")) || [];
-let suspendedUsers = JSON.parse(localStorage.getItem("suspendedUsers")) || {};
-let platformStatus = JSON.parse(localStorage.getItem("platformStatus")) || { pubg: true, ff: true, codm: true, perso: true };
-let promos = JSON.parse(localStorage.getItem("promos")) || { "ASG10": { value: 10, active: true }, "WELCOME": { value: 5, active: true } };
-let orders = JSON.parse(localStorage.getItem("orders")) || [];
-let currentGame = null;
-let selectedPack = null;
-let selectedMethod = null;
-let appliedPromo = null;
-let isAdmin = false;
-let currentPhone = '';
-
-// --- FONCTIONS UTILES ---
-function showAlert(msg, type="danger") {
-    const alertDiv = document.createElement('div');
-    alertDiv.className = `alert alert-${type}`;
-    alertDiv.innerHTML = msg;
-    document.body.prepend(alertDiv);
-    setTimeout(() => alertDiv.remove(), 4000);
-}
-
-function updateHeader(game) {
-    const header = document.getElementById('mainHeader');
-    const title = document.getElementById('headerTitle');
-    const subtitle = document.getElementById('headerSubtitle');
-    document.body.className = game || '';
-    header.className = `header ${game || ''}`;
-
-    const gameNames = { pubg: 'PUBG MOBILE', ff: 'FREE FIRE', codm: 'COD MOBILE', perso: 'PERSO' };
-    if (game) {
-        title.innerHTML = `<i class="fa-solid fa-bolt"></i> ${gameNames[game]}`;
-        subtitle.textContent = 'Recharge Instantanée';
-    } else {
-        title.innerHTML = '<i class="fa-solid fa-bolt"></i> ASG UC SHOP PRO';
-        subtitle.textContent = 'PUBG • Free Fire • CODM • Perso';
-    }
-}
-
-function showView(viewId) {
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    document.getElementById(viewId).classList.add('active');
-    window.scrollTo(0, 0);
-}
-
-function formatCard(el) {
-    let v = el.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-    let matches = v.match(/\d{4,16}/g);
-    let match = matches && matches[0] || '';
-    let parts = [];
-    for (let i=0, len=match.length; i<len; i+=4) parts.push(match.substring(i, i+4));
-    el.value = parts.join(' ');
-}
-
-function formatExp(el) {
-    let v = el.value.replace(/\D/g,'');
-    if(v.length >= 2) el.value = v.slice(0,2) + '/' + v.slice(2,4);
-    else el.value = v;
-}
-
-// --- VALIDATION ID JOUEUR LIVE + SUSPENDU/BLOQUÉ ---
-function validatePlayerID(id) {
-    const error = document.getElementById('idError');
-    const helper = document.getElementById('idHelper');
-    const input = document.getElementById('playerID');
-    error.style.display = 'none';
-    helper.style.color = 'var(--success)';
-    input.style.borderColor = '';
-    input.classList.remove('error','valid');
-
-    if (!id) {
-        error.textContent = 'Entre ton ID joueur';
-        error.style.display = 'block';
-        helper.textContent = '';
-        input.classList.add('error');
-        return false;
-    }
-
-    if (suspendedUsers[id]) {
-        error.textContent = 'Compte suspendu temporairement';
-        error.style.display = 'block';
-        helper.style.color = 'var(--warning)';
-        helper.textContent = '✗';
-        input.classList.add('error');
-        return false;
-    }
-    if (blockedUsers.includes(id)) {
-        error.textContent = 'Compte bloqué définitivement';
-        error.style.display = 'block';
-        helper.style.color = 'var(--danger)';
-        helper.textContent = '✗';
-        input.classList.add('error');
-        return false;
-    }
-
-    let valid = false;
-    if (currentGame === 'pubg') valid = id.length >= 10 && id.length <= 12 && /^\d+$/.test(id);
-    if (currentGame === 'ff') valid = id.length >= 8 && id.length <= 12 && /^\d+$/.test(id);
-    if (currentGame === 'codm') valid = id.length >= 12 && id.length <= 16 && /^\d+$/.test(id);
-    if (currentGame === 'perso') valid = id.length >= 3;
-
-    if (!valid) {
-        error.textContent = currentGame === 'pubg'? 'ID PUBG : 10-12 chiffres' :
-                           currentGame === 'ff'? 'ID Free Fire : 8-12 chiffres' :
-                           currentGame === 'codm'? 'ID CODM : 12-16 chiffres' : 'ID trop court';
-        error.style.display = 'block';
-        helper.style.color = 'var(--danger)';
-        helper.textContent = '✗';
-        input.classList.add('error');
-        return false;
-    }
-
-    helper.textContent = '✓ Valide';
-    input.classList.add('valid');
-    return true;
-}
-
-// --- INITIALISATION ---
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('ASG SHOP V9 - Initialisation...');
-
-    let clickCount = 0;
-    document.getElementById('mainHeader').addEventListener('click', () => {
-        clickCount++;
-        if (clickCount === 3) {
-            if (isAdmin) {
-                showView('viewAdmin');
-                document.getElementById('adminLogin').classList.add('hidden');
-                document.getElementById('adminPanel').classList.remove('hidden');
-            } else {
-                showView('viewAdmin');
-            }
-            clickCount = 0;
-        }
-        setTimeout(() => clickCount = 0, 2000);
-    });
-
-    document.querySelectorAll('.platform-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            selectGame(this.dataset.game);
-        });
-    });
-
-    document.getElementById('backToMenu1').addEventListener('click', () => { showView('viewMenu'); updateHeader(); });
-    document.getElementById('backToMenu2').addEventListener('click', () => { showView('viewMenu'); updateHeader(); });
-    document.getElementById('backToPack').addEventListener('click', () => showView('viewPack'));
-    document.getElementById('adminAccessBtn').addEventListener('click', () => showView('viewAdmin'));
-    document.getElementById('closeAdmin').addEventListener('click', closeAdmin);
-    document.getElementById('adminLoginBtn').addEventListener('click', adminLogin);
-    document.getElementById('goToPaymentBtn').addEventListener('click', goToPayment);
-    document.getElementById('applyPromoBtn').addEventListener('click', applyPromo);
-    document.getElementById('promoRemove').addEventListener('click', removePromo);
-    document.getElementById('payBtn').addEventListener('click', processPayment);
-    document.getElementById('pdfBtn').addEventListener('click', downloadPDF);
-    document.getElementById('whatsappBtn').addEventListener('click', sendWhatsApp);
-    document.getElementById('newOrderBtn').addEventListener('click', () => { showView('viewMenu'); updateHeader(); });
-    document.getElementById('playerID').addEventListener('input', (e) => validatePlayerID(e.target.value.trim()));
-    document.getElementById('cardNum').addEventListener('input', (e) => formatCard(e.target));
-    document.getElementById('cardExp').addEventListener('input', (e) => formatExp(e.target));
-
-    document.getElementById('exportCsvBtn').addEventListener('click', exportCSV);
-    document.getElementById('whatsappHelpBtn').addEventListener('click', () => window.open(`https://wa.me/${WHATSAPP}`, '_blank'));
-    document.getElementById('addPromoBtn').addEventListener('click', addPromo);
-    document.getElementById('savePricesBtn').addEventListener('click', savePrices);
-    document.getElementById('resetPricesBtn').addEventListener('click', resetPrices);
-    document.getElementById('priceGameSelect').addEventListener('change', renderPriceEditor);
-    document.getElementById('suspendBtn').addEventListener('click', () => manageClient('suspend'));
-    document.getElementById('blockBtn').addEventListener('click', () => manageClient('block'));
-    document.getElementById('unblockBtn').addEventListener('click', () => manageClient('unblock'));
-    document.getElementById('searchFacture')?.addEventListener('input', renderFacturesList);
-    document.getElementById('filterGameFacture')?.addEventListener('change', renderFacturesList);
-    document.getElementById('filterStatusFacture')?.addEventListener('change', renderFacturesList);
-    document.getElementById('exportFacturesBtn')?.addEventListener('click', exportFacturesCSV);
-
-    document.querySelectorAll('.admin-tab').forEach(tab => {
-        tab.addEventListener('click', function() {
-            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.admin-content').forEach(c => c.classList.remove('active'));
-            this.classList.add('active');
-            document.getElementById('tab-' + this.dataset.tab).classList.add('active');
-        });
-    });
-
-    ['togglePubg','toggleFF','toggleCODM','togglePerso'].forEach(id => {
-        document.getElementById(id).addEventListener('change', function() {
-            const game = id.replace('toggle','').toLowerCase();
-            platformStatus[game] = this.checked;
-            localStorage.setItem("platformStatus", JSON.stringify(platformStatus));
-            updatePlatformButtons();
-        });
-    });
-
-    document.querySelectorAll('.method-item').forEach(item => {
-        item.addEventListener('click', function() {
-            selectMethod(this.dataset.method);
-        });
-    });
-
-    updatePlatformButtons();
-    renderHistory();
-    updateAdminPanel();
-    console.log('ASG SHOP V9 - Prêt!');
+// Set correct icon on load
+window.addEventListener('load',()=>{
+  const btn=document.getElementById('themeBtn');
+  if(btn)btn.textContent=savedTheme==='dark'?'🌙':'☀️';
 });
 
-// --- NAVIGATION ---
-function selectGame(game) {
-    if (!platformStatus[game]) {
-        showAlert("Plateforme en maintenance", "warning");
-        return;
-    }
-    currentGame = game;
-    updateHeader(game);
-    renderPacks();
-    showView('viewPack');
+function waitFB(cb){if(window._db)cb();else window.addEventListener('fbr',cb,{once:true});}
+
+/* ===== AUTH ===== */
+window.gSignIn=function(){waitFB(()=>window._gIn().catch(e=>toast('Erreur: '+e.message,'err')));};
+window.gSignOut=function(){
+  waitFB(()=>window._gOut().then(()=>{
+    entered=false;
+    document.getElementById('appWrap').style.display='none';
+    const sp=document.getElementById('splash');
+    sp.style.display='flex';sp.classList.remove('hide');
+  }));
+};
+
+window.addEventListener('ac',e=>{
+  const u=e.detail;
+  if(u){
+    const sp=document.getElementById('splash');
+    sp.classList.add('hide');setTimeout(()=>sp.style.display='none',500);
+    const first=u.displayName?u.displayName.split(' ')[0]:'Joueur';
+    document.getElementById('inName').textContent=first;
+    const avw=document.getElementById('inAvWrap');
+    avw.innerHTML=u.photoURL?`<img src="${u.photoURL}" class="in-av"/>`:`<div class="in-av-ph">🎮</div>`;
+    fillInspire();
+    document.getElementById('uav').src=u.photoURL||'';
+    document.getElementById('unm').textContent=u.displayName||u.email;
+    if(!entered){document.getElementById('inspire').classList.add('open');}
+    else showApp();
+  }
+});
+
+function fillInspire(){
+  const t=validTeams();
+  document.getElementById('ic-t').textContent=t.length;
+  document.getElementById('ic-p').textContent=t.reduce((s,x)=>s+(x.players?.length||0),0);
+  document.getElementById('ic-q').textContent=t.filter(x=>['qualified','final','winner'].includes(x.status)).length;
+  document.getElementById('ic-m').textContent=Object.keys(window.MD||{}).length;
 }
 
-function updatePlatformButtons() {
-    document.querySelectorAll('.platform-btn').forEach(btn => {
-        const game = btn.dataset.game;
-        btn.classList.toggle('disabled',!platformStatus[game]);
-    });
-    ['togglePubg','toggleFF','toggleCODM','togglePerso'].forEach(id => {
-        const game = id.replace('toggle','').toLowerCase();
-        document.getElementById(id).checked = platformStatus[game];
-    });
+window.enterApp=function(){
+  entered=true;
+  const ins=document.getElementById('inspire');
+  ins.classList.add('hide');
+  setTimeout(()=>{ins.classList.remove('open');ins.classList.remove('hide');},550);
+  showApp();
+};
+function showApp(){document.getElementById('appWrap').style.display='block';refreshAll();}
+
+/* ===== DATA ===== */
+window.addEventListener('du',()=>{fillInspire();if(entered)refreshAll();});
+
+function validTeams(){return Object.values(window.TD||{}).filter(t=>t&&t.name);}
+
+function refreshAll(){
+  updateHero();updateCounts();
+  if(curTab==='classement')renderRanked('rankList',null);
+  else if(curTab==='toutes')renderRanked('allList',null,'Aucune équipe inscrite.');
+  else if(curTab==='qualifies')renderRanked('qualifList',['qualified','final','winner'],'Aucune équipe qualifiée.');
+  else if(curTab==='nonqualifies')renderRanked('nonQualifList',['pending','eliminated'],'Aucune équipe non qualifiée.');
+  else if(curTab==='finale')renderRanked('finaleList',['final','winner'],'Aucune équipe en finale.');
+  else if(curTab==='gagnants')renderRanked('gagList',['winner'],'Aucun vainqueur encore.');
+  else if(curTab==='matchs')renderMatches();
+  else if(curTab==='inscription')renderReg();
+  else if(curTab==='monequipe')renderMyTeam();
 }
 
-// --- PACKS & PAIEMENT ---
-function renderPacks() {
-    const ucGrid = document.getElementById('ucGrid');
-    ucGrid.innerHTML = '';
-    const packs = PACKS[currentGame].packs;
-    const popularPacks = { pubg: ["660","1800","8100"], ff: ["1080","2200","5600"], codm: ["2400","5000","10800"], perso: ["500","1000","5000"] };
-    const discountPacks = { pubg: ["1800","3850"], ff: ["2200"], codm: ["5000"], perso: ["5000"] };
-
-    document.getElementById('packLabel').textContent = `Choisis ton pack ${PACKS[currentGame].name} :`;
-    document.getElementById('customQty').classList.toggle('hidden', currentGame!== 'perso');
-
-    Object.keys(packs).forEach(uc => {
-                const price = packs[uc];
-        const isPopular = popularPacks[currentGame].includes(uc);
-        const hasDiscount = discountPacks[currentGame].includes(uc);
-        const oldPrice = hasDiscount? Math.round(price * 1.15) : null;
-
-        const div = document.createElement('div');
-        div.className = 'uc-item';
-        div.innerHTML = `
-            ${isPopular? `<span class="badge badge-best">HOT</span>` : ''}
-            ${hasDiscount? `<span class="discount-tag">-15%</span>` : ''}
-            <div class="uc-item-qty">${uc}</div>
-            <div class="uc-item-price">
-                ${oldPrice? `<span class="uc-item-oldprice">${oldPrice.toLocaleString()}F</span>` : ''}
-                ${price.toLocaleString()} F
-            </div>
-            <div class="uc-item-per">${Math.round(price/parseInt(uc))}F/unité</div>`;
-        div.onclick = () => selectPack(uc, div);
-        ucGrid.appendChild(div);
-    });
+function updateHero(){
+  const t=validTeams();
+  document.getElementById('h-t').textContent=t.length;
+  document.getElementById('h-p').textContent=t.reduce((s,x)=>s+(x.players?.length||0),0);
+  document.getElementById('h-q').textContent=t.filter(x=>['qualified','final','winner'].includes(x.status)).length;
+  document.getElementById('h-f').textContent=t.filter(x=>['final','winner'].includes(x.status)).length;
+  document.getElementById('h-m').textContent=Object.keys(window.MD||{}).length;
+}
+function updateCounts(){
+  const t=validTeams();
+  document.getElementById('tc-a').textContent=t.length;
+  document.getElementById('tc-q').textContent=t.filter(x=>['qualified','final','winner'].includes(x.status)).length;
+  document.getElementById('tc-nq').textContent=t.filter(x=>['pending','eliminated'].includes(x.status||'pending')).length;
+  document.getElementById('tc-f').textContent=t.filter(x=>['final','winner'].includes(x.status)).length;
+  document.getElementById('tc-w').textContent=t.filter(x=>x.status==='winner').length;
 }
 
-function selectPack(uc, el) {
-    selectedPack = { uc: parseInt(uc), price: PACKS[currentGame].packs[uc] };
-    document.querySelectorAll('.uc-item').forEach(e => e.classList.remove('active'));
-    el.classList.add('active');
-    document.getElementById('goToPaymentBtn').style.display = 'block';
-    if(currentGame === 'perso') document.getElementById('customQty').value = uc;
+/* ===== TABS ===== */
+window.goTab=function(tab){
+  curTab=tab;
+  document.querySelectorAll('.nt').forEach(n=>n.classList.remove('active'));
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  const tabs=['classement','toutes','qualifies','nonqualifies','finale','gagnants','matchs','inscription','monequipe'];
+  const i=tabs.indexOf(tab);
+  if(i>=0)document.querySelectorAll('.nt')[i]?.classList.add('active');
+  document.getElementById('sec-'+tab)?.classList.add('active');
+  refreshAll();
+};
+
+/* ===== SORT ===== */
+function rsort(arr){
+  return arr.filter(t=>t&&t.name).sort((a,b)=>((b.points||0)+(b.kills||0))-((a.points||0)+(a.kills||0)));
 }
 
-function goToPayment() {
-    const id = document.getElementById('playerID').value.trim();
-    if (!validatePlayerID(id)) return;
-    if (!selectedPack && currentGame === 'perso') {
-        const customQty = parseInt(document.getElementById('customQty').value);
-        if (!customQty || customQty < 100) return showAlert("Quantité min. 100", "danger");
-        selectedPack = { uc: customQty, price: Math.round(customQty * (PACKS.perso.packs["100"]/100)) };
-    }
-    if (!selectedPack) return showAlert("Sélectionne un pack", "danger");
+/* ===== RANKED LIST with A./1./2./3./4. format ===== */
+function renderRanked(elId,statusFilter,emptyMsg){
+  const el=document.getElementById(elId);if(!el)return;
+  let teams=rsort(validTeams());
+  if(statusFilter)teams=teams.filter(t=>statusFilter.includes(t.status||'pending'));
 
-    document.getElementById('price').value = `${selectedPack.price.toLocaleString()} FCFA`;
-    document.getElementById('priceFinal').classList.add('hidden');
-    document.getElementById('promoApplied').classList.add('hidden');
-    appliedPromo = null;
-    selectedMethod = null;
-    document.querySelectorAll('.method-item').forEach(el => el.classList.remove('active'));
-    document.getElementById('payDetails').classList.add('hidden');
-    showView('viewPayment');
-}
+  // For classement tab: render podium first
+  if(elId==='rankList'){renderPodium(teams);}
 
-function applyPromo() {
-    const code = document.getElementById('promoInput').value.trim().toUpperCase();
-    if (!code) return showAlert("Entre un code", "warning");
-    if (!promos[code] ||!promos[code].active) return showAlert("Code invalide ou expiré", "danger");
+  if(!teams.length){
+    el.innerHTML=`<div class="empty"><span class="ei">🎮</span><p>${emptyMsg||'Aucune équipe inscrite.'}</p></div>`;
+    return;
+  }
 
-    appliedPromo = { code, value: promos[code].value };
-    const newPrice = Math.round(selectedPack.price * (1 - appliedPromo.value / 100));
-    document.getElementById('price').value = `${selectedPack.price.toLocaleString()} FCFA (barré)`;
-    document.getElementById('priceFinal').value = `${newPrice.toLocaleString()} FCFA (-${appliedPromo.value}%)`;
-    document.getElementById('priceFinal').classList.remove('hidden');
-    document.getElementById('promoCodeTxt').textContent = code;
-    document.getElementById('promoApplied').classList.remove('hidden');
-    document.getElementById('btnPrice').textContent = newPrice.toLocaleString();
-}
+  el.innerHTML=teams.map((t,i)=>{
+    const pos=i+1;
+    // Letter label for team: A. B. C. etc using position
+    const alpha=String.fromCharCode(64+pos); // A=65, so 64+1=A
+    const alphaLabel=pos<=26?alpha+'.':'#'+pos;
 
-function removePromo() {
-    appliedPromo = null;
-    document.getElementById('price').value = `${selectedPack.price.toLocaleString()} FCFA`;
-    document.getElementById('priceFinal').classList.add('hidden');
-    document.getElementById('promoApplied').classList.add('hidden');
-    document.getElementById('promoInput').value = '';
-    document.getElementById('btnPrice').textContent = selectedPack.price.toLocaleString();
-}
+    const rankClass=pos===1?'rank-1':pos===2?'rank-2':pos===3?'rank-3':
+      t.status==='qualified'?'rank-q':t.status==='final'?'rank-f':
+      t.status==='winner'?'rank-w':t.status==='eliminated'?'rank-e':'';
 
-function selectMethod(method) {
-    selectedMethod = method;
-    document.querySelectorAll('.method-item').forEach(el => el.classList.remove('active'));
-    document.querySelector(`[data-method="${method}"]`).classList.add('active');
-    document.getElementById('payDetails').classList.remove('hidden');
-    document.getElementById('mobileGroup').classList.toggle('hidden', method === 'card');
-    document.getElementById('cardGroup').classList.toggle('hidden', method!== 'card');
-    document.getElementById('splitSecond').classList.toggle('hidden', method!== 'split');
+    const alphaRankClass=pos===1?'r1':pos===2?'r2':pos===3?'r3':'';
+    const logo=t.logo?`<img src="${t.logo}" class="re-logo"/>`:`<div class="re-nlogo">🎮</div>`;
+    const total=(t.points||0)+(t.kills||0);
 
-    const finalPrice = appliedPromo? Math.round(selectedPack.price * (1 - appliedPromo.value / 100)) : selectedPack.price;
-    document.getElementById('btnPrice').textContent = finalPrice.toLocaleString();
-}
+    const players=(t.players||[]).map((p,pi)=>`
+      <div class="re-player">
+        <span class="re-player-num">${pi+1}.</span>
+        <span class="re-player-name">${x(p.name||'—')}</span>
+        ${pi===0?'<span class="cap-badge">Capitaine</span>':''}
+      </div>
+    `).join('');
 
-function processPayment() {
-    try {
-        const id = document.getElementById('playerID').value.trim();
-        const email = document.getElementById('clientEmail').value.trim();
-        if (!validatePlayerID(id)) return;
-        if (!selectedMethod) return showAlert("Choisis une méthode de paiement", "danger");
-
-        if (email &&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            return showAlert("Email invalide", "danger");
-        }
-
-        let phone = '';
-        let phone2 = '';
-        if (selectedMethod!== 'card') {
-            phone = document.getElementById('indicatif').value + document.getElementById('phoneNum').value.trim();
-            const num = document.getElementById('phoneNum').value.trim();
-            if (!num) return showAlert("Entre ton numéro", "danger");
-            if (num.length < 8) return showAlert("Numéro trop court - 8 chiffres min", "danger");
-            if (!/^[6-9]/.test(num)) return showAlert("Numéro doit commencer par 6,7,8 ou 9", "danger");
-            if (blockedUsers.includes(phone) || blockedUsers.includes(id)) return showAlert("Client bloqué", "danger");
-            if (suspendedUsers[id]) return showAlert("Compte suspendu", "danger");
-
-            if (selectedMethod === 'split') {
-                phone2 = document.getElementById('indicatif2').value + document.getElementById('phoneNum2').value.trim();
-                const num2 = document.getElementById('phoneNum2').value.trim();
-                if (!num2) return showAlert("Entre le 2ème numéro", "danger");
-                if (num2.length < 8) return showAlert("2ème numéro trop court", "danger");
-                if (!/^[6-9]/.test(num2)) return showAlert("2ème numéro doit commencer par 6,7,8 ou 9", "danger");
-                if (phone === phone2) return showAlert("Les 2 numéros doivent être différents", "danger");
-            }
-        } else {
-            const cardNum = document.getElementById('cardNum').value.replace(/\s/g,'');
-            const cardExp = document.getElementById('cardExp').value;
-            const cardCvv = document.getElementById('cardCvv').value;
-            if (cardNum.length < 16) return showAlert("Numéro de carte invalide - 16 chiffres min", "danger");
-            if (!cardExp || cardExp.length < 5) return showAlert("Date expiration invalide - format MM/AA", "danger");
-            if (!cardCvv || cardCvv.length < 3) return showAlert("CVC invalide - 3 chiffres", "danger");
-            const [mm, yy] = cardExp.split('/');
-            if (parseInt(mm) < 1 || parseInt(mm) > 12) return showAlert("Mois invalide", "danger");
-            const currentYear = new Date().getFullYear() % 100;
-            if (parseInt(yy) < currentYear) return showAlert("Carte expirée", "danger");
-        }
-
-        currentPhone = phone;
-        startLootBarDelivery(id, phone2, email);
-    } catch(e) {
-        console.error('Erreur paiement:', e);
-        showAlert("Erreur lors du paiement. Réessaie.", "danger");
-    }
-}
-
-function generateOrderCode() {
-    return Math.floor(1000 + Math.random() * 9000).toString();
-}
-
-function startLootBarDelivery(id, phone2, email) {
-    const overlay = document.getElementById('deliveryOverlay');
-    overlay.style.display = 'flex';
-
-    const steps = ['step1','step2','step3','step4','step5'];
-    const texts = [
-        "Vérification paiement...",
-        "Vérification ID joueur...",
-        "Connexion serveur jeu...",
-        "Envoi des ressources...",
-        "Livraison confirmée!"
-    ];
-
-    let currentStep = 0;
-    const duration = 10000;
-    const stepTime = duration / 5;
-
-    document.getElementById('deliveryTitle').textContent = 'Livraison en cours...';
-    document.getElementById('progressFill').style.width = '0%';
-    steps.forEach(s => {
-        document.getElementById(s).classList.remove('active');
-        document.getElementById(s).querySelector('i').className = 'fa-solid fa-circle';
-    });
-
-    const interval = setInterval(() => {
-        const progress = ((currentStep + 1) / 5) * 100;
-        document.getElementById('progressFill').style.width = progress + '%';
-        document.getElementById('deliveryStatus').textContent = texts[currentStep];
-
-        if(currentStep < 5) {
-            const stepEl = document.getElementById(steps[currentStep]);
-            stepEl.classList.add('active');
-            stepEl.querySelector('i').className = 'fa-solid fa-circle-check';
-            currentStep++;
-        }
-
-        if(currentStep >= 5) {
-            clearInterval(interval);
-            setTimeout(() => finishDelivery(id, phone2, email), 500);
-        }
-    }, stepTime);
-}
-
-function finishDelivery(id, phone2, email) {
-    try {
-        const code = generateOrderCode();
-        const finalPrice = appliedPromo? Math.round(selectedPack.price * (1 - appliedPromo.value / 100)) : selectedPack.price;
-
-        const order = {
-            id: Date.now(),
-            code,
-            playerId: id,
-            game: currentGame,
-            pack: selectedPack.uc,
-            amount: finalPrice,
-            originalAmount: selectedPack.price,
-            promo: appliedPromo?.code || null,
-            method: selectedMethod,
-            phone: currentPhone,
-            phone2,
-            email: email || null,
-            emailSent: false,
-            status: "delivered",
-            timestamp: Date.now()
-        };
-
-        orders.push(order);
-        localStorage.setItem("orders", JSON.stringify(orders));
-
-        document.getElementById('deliveryTitle').textContent = 'Succès! 🎉';
-        document.getElementById('deliveryStatus').textContent = 'Ressources livrées avec succès';
-
-        setTimeout(() => {
-            generateInvoice(order);
-            renderHistory();
-            updateStats();
-            document.getElementById('deliveryOverlay').style.display = "none";
-        }, 1500);
-    } catch(e) {
-        console.error('Erreur livraison:', e);
-        showAlert("Erreur livraison. Contacte support.", "danger");
-        document.getElementById('deliveryOverlay').style.display = "none";
-    }
-}
-
-// --- FACTURE ---
-function generateInvoice(order) {
-    try {
-        const date = new Date(order.timestamp).toLocaleString('fr-FR');
-        const invoiceNum = "ASG-" + order.id;
-        const methodTxt = { orange: "Orange Money", wave: "Wave", card: "Carte", split: "50/50 Split" }[order.method];
-
-        const gameData = PACKS[order.game];
-        if (!gameData) {
-            console.error('Jeu introuvable:', order.game);
-            return showAlert("Erreur: jeu invalide dans la commande", "danger");
-        }
-
-        const gameName = { pubg: 'PUBG Mobile', ff: 'Free Fire', codm: 'COD Mobile', perso: 'Perso' }[order.game];
-        const packName = `${order.pack} ${gameData.name}`;
-
-        const factureHTML = `
-        <div id="tempFacture" style="padding:20px;background:#020617;color:#f1f5f9;font-family:Arial;">
-            <h2 style="color:#c200fb;text-align:center;">ASG UC SHOP PRO</h2>
-            <p><b>Facture N° :</b> ${invoiceNum}</p>
-            <hr style="border:1px solid #1e293b;">
-            <p><b>Jeu :</b> ${gameName}</p>
-            <p><b>ID Joueur :</b> ${order.playerId}</p>
-            <p><b>Pack :</b> ${packName} ${gameData.icon}</p>
-            ${order.promo? `<p><b>Code Promo :</b> ${order.promo}</p>` : ''}
-            <p><b>Montant :</b> ${order.amount.toLocaleString()} FCFA</p>
-            <p><b>Paiement :</b> ${methodTxt}</p>
-            <p><b>Code :</b> ${order.code}</p>
-            <p><b>Date :</b> ${date}</p>
-            <hr style="border:1px solid #1e293b;">
-            <h3 style="color:#22c55e;text-align:center;">LIVRAISON CONFIRMÉE</h3>
-        </div>`;
-
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = factureHTML;
-        document.body.appendChild(tempDiv);
-
-        html2pdf().set({
-            margin: 10,
-            filename: `facture_${invoiceNum}.pdf`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'mm', format: 'a5', orientation: 'portrait' }
-        }).from(tempDiv).save().then(() => {
-            document.body.removeChild(tempDiv);
-        }).catch(err => {
-            console.error('Erreur PDF:', err);
-            document.body.removeChild(tempDiv);
-        });
-
-        let msg = `🧾 *ASG UC SHOP PRO*%0A`;
-        msg += `Facture: ${invoiceNum}%0A`;
-        msg += `Jeu: ${gameName}%0A`;
-        msg += `ID: ${order.playerId}%0A`;
-        msg += `Pack: ${packName}%0A`;
-        msg += `Montant: ${order.amount.toLocaleString()} FCFA%0A`;
-        msg += `Statut: ✅ LIVRÉ%0A`;
-        setTimeout(() => window.open(`https://wa.me/${WHATSAPP}?text=${msg}`, "_blank"), 500);
-
-        if (order.email && order.status === 'delivered' &&!order.emailSent) {
-            setTimeout(() => sendInvoiceByEmail(order), 1000);
-        }
-
-        showView('viewInvoice');
-        document.getElementById('invoiceBox').style.display = 'block';
-        document.getElementById('facture').innerHTML = factureHTML.replace('tempFacture','');
-    } catch(e) {
-        console.error('Erreur generateInvoice:', e);
-        showAlert("Erreur génération facture", "danger");
-    }
-}
-
-function downloadPDF() {
-    showAlert("PDF déjà téléchargé!", "success");
-}
-
-function sendWhatsApp() {
-    window.open(`https://wa.me/${WHATSAPP}`, "_blank");
-}
-
-function renderHistory() {
-    const container = document.getElementById('historyList');
-    const userOrders = orders.filter(o => o.status === 'delivered').slice(-5).reverse();
-    if (userOrders.length === 0) {
-        container.innerHTML = '<p style="font-size:0.8rem; color:var(--text-muted)">Aucune transaction.</p>';
-        return;
-    }
-    container.innerHTML = userOrders.map(o => {
-        const gameData = PACKS[o.game];
-        if (!gameData) return '';
-        return `
-        <div class="history-item">
-            <b>${o.pack} ${gameData.name}</b> • ${o.game.toUpperCase()}<br>
-            <small>ID: ${o.playerId} • ${new Date(o.timestamp).toLocaleDateString('fr-FR')} • ${o.amount.toLocaleString()}F</small>
-        </div>`;
-    }).join('');
-}
-
-// --- ADMIN ---
-function closeAdmin() {
-    showView('viewMenu');
-    isAdmin = false;
-}
-
-function adminLogin() {
-    const email = document.getElementById('adminEmail').value;
-    const pass = document.getElementById('adminPass').value;
-    if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
-        isAdmin = true;
-        document.getElementById('adminLogin').classList.add('hidden');
-        document.getElementById('adminPanel').classList.remove('hidden');
-        updateAdminPanel();
-        showAlert("Connexion réussie", "success");
-    } else {
-        showAlert("Identifiants incorrects", "danger");
-    }
-}
-
-function updateAdminPanel() {
-    renderPromoList();
-    renderPriceEditor();
-    renderClientLists();
-    renderPendingList();
-    renderFacturesList();
-    updateStats();
-}
-
-function updateStats() {
-    const now = new Date();
-    const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-    const weekOrders = orders.filter(o => o.timestamp > weekAgo.getTime() && o.status === 'delivered');
-    const caWeek = weekOrders.reduce((sum, o) => sum + o.amount, 0);
-    const caTotal = orders.filter(o => o.status === 'delivered').reduce((sum, o) => sum + o.amount, 0);
-
-    document.getElementById('statCAWeek').textContent = caWeek.toLocaleString();
-    document.getElementById('statCmdWeek').textContent = weekOrders.length;
-    document.getElementById('statCA').textContent = caTotal.toLocaleString();
-    document.getElementById('statCmd').textContent = orders.filter(o => o.status === 'delivered').length;
-}
-
-function exportCSV() {
-    let csv = "Date,ID,Jeu,Pack,Montant,Promo,Methode,Code,Statut\n";
-    orders.forEach(o => {
-        csv += `${new Date(o.timestamp).toLocaleString('fr-FR')},${o.playerId},${o.game},${o.pack},${o.amount},${o.promo||''},${o.method},${o.code},${o.status}\n`;
-    });
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `asg_orders_${new Date().toISOString().split('T')[0]}.csv`;
-    a.click();
-}
-
-// --- FACTURES ADMIN ---
-function updateFactureStats() {
-    const delivered = orders.filter(o => o.status === 'delivered');
-    const caTotal = delivered.reduce((sum, o) => sum + o.amount, 0);
-    const nbFactures = delivered.length;
-    const avgPanier = nbFactures > 0? Math.round(caTotal / nbFactures) : 0;
-    const emailsSent = delivered.filter(o => o.emailSent).length;
-
-    document.getElementById('factureCA').textContent = caTotal.toLocaleString();
-    document.getElementById('factureNb').textContent = nbFactures;
-    document.getElementById('factureAvg').textContent = avgPanier.toLocaleString();
-    document.getElementById('factureMail').textContent = emailsSent;
-}
-
-function renderFacturesList() {
-    try {
-        updateFactureStats();
-        const list = document.getElementById('facturesList');
-        const search = document.getElementById('searchFacture')?.value.toLowerCase() || '';
-        const filterGame = document.getElementById('filterGameFacture')?.value || '';
-        const filterStatus = document.getElementById('filterStatusFacture')?.value || '';
-
-        let filtered = orders.filter(o => {
-            const matchSearch =!search ||
-                o.playerId.toLowerCase().includes(search) ||
-                o.code.toLowerCase().includes(search) ||
-                o.game.toLowerCase().includes(search) ||
-                o.amount.toString().includes(search) ||
-                (o.email && o.email.toLowerCase().includes(search)) ||
-                (o.phone && o.phone.includes(search));
-            const matchGame =!filterGame || o.game === filterGame;
-            const matchStatus =!filterStatus || o.status === filterStatus;
-            return matchSearch && matchGame && matchStatus;
-        }).reverse();
-
-        if (filtered.length === 0) {
-            list.innerHTML = '<p style="text-align:center;opacity:0.6;font-size:13px;">Aucune facture trouvée</p>';
-            return;
-        }
-
-        list.innerHTML = filtered.map(o => {
-            const gameData = PACKS[o.game];
-            if (!gameData) {
-                console.warn('Commande corrompue ignorée:', o.code, 'jeu:', o.game);
-                return '';
-            }
-
-            const gameName = { pubg: 'PUBG', ff: 'FF', codm: 'CODM', perso: 'Perso' }[o.game];
-            const statusColor = o.status === 'delivered'? 'var(--success)' : 'var(--warning)';
-            const statusTxt = o.status === 'delivered'? 'LIVRÉ' : 'EN ATTENTE';
-            const methodIcon = { orange: 'fa-mobile-screen', wave: 'fa-water', card: 'fa-credit-card', split: 'fa-percent' }[o.method];
-            const methodTxt = { orange: "Orange Money", wave: "Wave", card: "Carte", split: "50/50 Split" }[o.method];
-
-            return `
-            <div class="history-item" style="border-left-color:${statusColor};padding:16px;">
-                <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px;">
-                    <div style="flex:1;">
-                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-                            <b style="font-size:15px;">${o.pack} ${gameData.name}</b>
-                            <span style="background:${statusColor};color:#000;font-size:9px;padding:2px 6px;border-radius:4px;font-weight:700;">${statusTxt}</span>
-                            ${o.emailSent? '<span style="background:var(--accent);color:#000;font-size:9px;padding:2px 6px;border-radius:4px;font-weight:700;"><i class="fa-solid fa-envelope"></i></span>' : ''}
-                        </div>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;margin-top:8px;">
-                            <div>
-                                <small style="opacity:0.6;">👤 CLIENT</small><br>
-                                <b>ID:</b> ${o.playerId}<br>
-                                <b>Tel:</b> ${o.phone || 'Carte'}<br>
-                                <b>Email:</b> ${o.email || 'Non renseigné'}
-                            </div>
-                            <div>
-                                <small style="opacity:0.6;">💰 PAIEMENT</small><br>
-                                <b>Méthode:</b> <i class="fa-solid ${methodIcon}"></i> ${methodTxt}<br>
-                                <b>Montant:</b> ${o.amount.toLocaleString()}F<br>
-                                <b>Code:</b> ${o.code}
-                            </div>
-                        <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);font-size:11px;">
-                            <span style="color:var(--accent);">🎮 ${gameName}</span> •
-                            <span>${new Date(o.timestamp).toLocaleDateString('fr-FR')} ${new Date(o.timestamp).toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'})}</span>
-                            ${o.promo? ` • <span style="color:var(--success);">Promo: ${o.promo}</span>` : ''}
-                            ${o.phone2? ` • <span style="color:var(--perso);">2ème: ${o.phone2}</span>` : ''}
-                        </div>
-                    <div style="display:flex;flex-direction:column;gap:4px;margin-left:10px;">
-                        <button class="btn btn-success" style="padding:5px 10px;font-size:10px;width:auto;" onclick="viewAdminFacture('${o.code}')" title="Voir facture">
-                            <i class="fa-solid fa-eye"></i>
-                        </button>
-                        <button class="btn btn-secondary" style="padding:5px 10px;font-size:10px;width:auto;" onclick="downloadAdminPDF('${o.code}')" title="Télécharger PDF">
-                            <i class="fa-solid fa-file-pdf"></i>
-                        </button>
-                        ${o.email? `<button class="btn" style="padding:5px 10px;font-size:10px;width:auto;background:#3b82f6;" onclick="sendInvoiceByEmail(orders.find(x=>x.code==='${o.code}'))" title="Envoyer par email">
-                            <i class="fa-solid fa-envelope"></i>
-                        </button>` : ''}
-                        <button class="btn" style="padding:5px 10px;font-size:10px;width:auto;background:#22c55e;" onclick="resendInvoice(orders.find(x=>x.code==='${o.code}'))" title="Renvoyer WhatsApp">
-                            <i class="fa-brands fa-whatsapp"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>`;
-        }).join('');
-    } catch(e) {
-        console.error('Erreur renderFacturesList:', e);
-    }
-}
-
-function viewAdminFacture(code) {
-    const order = orders.find(o => o.code === code);
-    if (!order) return showAlert("Facture introuvable", "danger");
-    generateInvoice(order);
-    showAlert(`Facture ${code} affichée`, "success");
-}
-
-function downloadAdminPDF(code) {
-    const order = orders.find(o => o.code === code);
-    if (!order) return showAlert("Facture introuvable", "danger");
-
-    const date = new Date(order.timestamp).toLocaleString('fr-FR');
-    const invoiceNum = "ASG-" + order.id;
-    const methodTxt = { orange: "Orange Money", wave: "Wave", card: "Carte", split: "50/50 Split" }[order.method];
-    const gameName = { pubg: 'PUBG Mobile', ff: 'Free Fire', codm: 'COD Mobile', perso: 'Perso' }[order.game];
-
-    const factureHTML = `
-    <div id="tempFactureAdmin" style="padding:20px;background:#020617;color:#f1f5f9;font-family:Arial;">
-        <h2 style="color:#c200fb;text-align:center;">ASG UC SHOP PRO</h2>
-        <p><b>Facture N° :</b> ${invoiceNum}</p>
-        <hr style="border:1px solid #1e293b;">
-        <p><b>Jeu :</b> ${gameName}</p>
-        <p><b>ID Joueur :</b> ${order.playerId}</p>
-        <p><b>Pack :</b> ${order.pack} ${PACKS[order.game].name} ${PACKS[order.game].icon}</p>
-        ${order.promo? `<p><b>Code Promo :</b> ${order.promo}</p>` : ''}
-        <p><b>Montant :</b> ${order.amount.toLocaleString()} FCFA</p>
-        <p><b>Paiement :</b> ${methodTxt}</p>
-        <p><b>Téléphone :</b> ${order.phone || 'Carte'}</p>
-        ${order.email? `<p><b>Email :</b> ${order.email}</p>` : ''}
-        <p><b>Code :</b> ${order.code}</p>
-        <p><b>Date :</b> ${date}</p>
-        <p><b>Statut :</b> ${order.status === 'delivered'? 'LIVRÉ' : 'EN ATTENTE'}</p>
-        <hr style="border:1px solid #1e293b;">
-        <h3 style="color:#22c55e;text-align:center;">${order.status === 'delivered'? 'LIVRAISON CONFIRMÉE' : 'EN ATTENTE DE VALIDATION'}</h3>
+    return `<div class="rank-entry ${rankClass}" id="re_${t.id}">
+      <div class="re-team" onclick="togglePlayers('${t.id}')">
+        <div class="re-rank-alpha ${alphaRankClass}">${alphaLabel}</div>
+        ${logo}
+        <div class="re-team-info">
+          <div class="re-team-name">${x(t.name)}</div>
+          <div class="re-team-meta">
+            ${bdg(t.status)}
+            <span class="re-pts">${total} pts</span>
+            <span class="re-kills">💀 ${t.kills||0}</span>
+          </div>
+        </div>
+        <span class="re-chevron" id="chev_${t.id}">▼</span>
+      </div>
+      <div class="re-players" id="pl_${t.id}">
+        ${players}
+      </div>
     </div>`;
-
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = factureHTML;
-    document.body.appendChild(tempDiv);
-
-    html2pdf().set({
-        margin: 10,
-        filename: `facture_${invoiceNum}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'mm', format: 'a5', orientation: 'portrait' }
-    }).from(tempDiv).save().then(() => {
-        document.body.removeChild(tempDiv);
-        showAlert(`PDF ${invoiceNum} téléchargé`, "success");
-    });
+  }).join('');
 }
 
-function sendInvoiceByEmail(order) {
-    const date = new Date(order.timestamp).toLocaleString('fr-FR');
-    const invoiceNum = "ASG-" + order.id;
-    const gameName = { pubg: 'PUBG Mobile', ff: 'Free Fire', codm: 'COD Mobile', perso: 'Perso' }[order.game];
-    const methodTxt = { orange: "Orange Money", wave: "Wave", card: "Carte", split: "50/50 Split" }[order.method];
+window.togglePlayers=function(id){
+  const pl=document.getElementById('pl_'+id);
+  const chev=document.getElementById('chev_'+id);
+  if(!pl)return;
+  pl.classList.toggle('open');
+  if(chev)chev.classList.toggle('open');
+};
 
-    const subject = `Facture ASG-${order.id} - ${gameName}`;
-    let body = `Bonjour,%0A%0A`;
-    body += `Merci pour votre achat sur ASG UC SHOP PRO!%0A%0A`;
-    body += `🧾 *DÉTAILS FACTURE*%0A`;
-    body += `────────────────────%0A`;
-    body += `Facture N° : ${invoiceNum}%0A`;
-    body += `Date : ${date}%0A`;
-    body += `Jeu : ${gameName}%0A`;
-    body += `ID Joueur : ${order.playerId}%0A`;
-    body += `Pack : ${order.pack} ${PACKS[order.game].name}%0A`;
-    if (order.promo) body += `Code Promo : ${order.promo}%0A`;
-    body += `Montant : ${order.amount.toLocaleString()} FCFA%0A`;
-    body += `Paiement : ${methodTxt}%0A`;
-    body += `Code Transaction : ${order.code}%0A`;
-    body += `Statut : ✅ LIVRÉ%0A%0A`;
-    body += `────────────────────%0A`;
-    body += `Vos ressources ont été livrées avec succès!%0A%0A`;
-    body += `Besoin d'aide? WhatsApp : +${WHATSAPP}%0A%0A`;
-    body += `Merci de votre confiance!%0A`;
-    body += `L'équipe ASG UC SHOP PRO`;
-
-    if (order.email) {
-        window.open(`mailto:${order.email}?subject=${encodeURIComponent(subject)}&body=${body}`, '_blank');
-        showAlert(`Email envoyé à ${order.email}`, "success");
-        order.emailSent = true;
-        localStorage.setItem("orders", JSON.stringify(orders));
-        renderFacturesList();
-    } else {
-        showAlert("Aucun email client renseigné", "warning");
-    }
+/* ===== PODIUM ===== */
+function renderPodium(teams){
+  const el=document.getElementById('podiumWrap');
+  if(!el||teams.length<1){if(el)el.innerHTML='';return;}
+  const mk=(t,rk,em)=>{
+    if(!t)return`<div style="flex:1;max-width:200px;"></div>`;
+    const lg=t.logo?`<img src="${t.logo}" class="p-logo"/>`:`<div class="p-nlogo">${em}</div>`;
+    return`<div class="p-slot rk${rk}">
+      <div class="p-emoji">${em}</div>
+      <div class="p-block">
+        ${lg}
+        <div class="p-name">${x(t.name)}</div>
+        <div class="p-pts">${(t.points||0)+(t.kills||0)} pts</div>
+        ${bdg(t.status)}
+      </div>
+    </div>`;
+  };
+  el.innerHTML=`<div class="podium">
+    ${mk(teams[1],2,'🥈')}${mk(teams[0],1,'🥇')}${mk(teams[2],3,'🥉')}
+  </div>`;
 }
 
-function resendInvoice(order) {
-    let msg = `🧾 *FACTURE ASG UC SHOP PRO*%0A`;
-    msg += `Facture: ASG-${order.id}%0A`;
-    msg += `Jeu: ${order.game.toUpperCase()}%0A`;
-    msg += `ID: ${order.playerId}%0A`;
-    msg += `Pack: ${order.pack} ${PACKS[order.game].name}%0A`;
-    msg += `Montant: ${order.amount.toLocaleString()} FCFA%0A`;
-    msg += `Code: ${order.code}%0A`;
-    msg += `Date: ${new Date(order.timestamp).toLocaleDateString('fr-FR')}%0A`;
-    msg += `Statut: ${order.status === 'delivered'? '✅ LIVRÉ' : '⏳ EN ATTENTE'}%0A%0A`;
-    msg += `Support: +${WHATSAPP}`;
-
-    window.open(`https://wa.me/${WHATSAPP}?text=${msg}`, "_blank");
-    showAlert(`Facture ${order.code} renvoyée`, "success");
+/* ===== MATCHES ===== */
+function renderMatches(){
+  const el=document.getElementById('matchsList');
+  const ms=Object.values(window.MD||{}).sort((a,b)=>b.savedAt-a.savedAt);
+  if(!ms.length){el.innerHTML=`<div class="empty"><span class="ei">🎯</span><p>Aucun match enregistré.</p></div>`;return;}
+  const pl={group:'Phase de Groupes',quarterfinal:'Quarts de Finale',semifinal:'Demi-Finales',final:'Finale'};
+  el.innerHTML=ms.map(m=>{
+    const rs=Object.values(m.results||{}).sort((a,b)=>a.rank-b.rank);
+    return`<div class="mi">
+      <div class="mih">
+        <span class="mi-num">Match #${m.matchNum}</span>
+        <span class="mi-phase">${pl[m.phase]||m.phase}</span>
+        <span class="mi-date">${new Date(m.savedAt).toLocaleDateString('fr-FR')}</span>
+      </div>
+      <div class="mig">
+        ${rs.map(r=>{
+          const td=window.TD?.[r.teamId];
+          const rl=td?.logo?`<img src="${td.logo}" class="mr-lg"/>`:`<div class="mr-nlg">🎮</div>`;
+          return`<div class="mir">
+            <div class="mr-rank ${r.rank===1?'mr1':r.rank===2?'mr2':r.rank===3?'mr3':'mro'}">#${r.rank}</div>
+            ${rl}
+            <div><div class="mr-nm">${x(r.teamName||'—')}</div><div class="mr-kl">💀 ${r.kills} kills</div></div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }).join('');
 }
 
-function exportFacturesCSV() {
-    let csv = "Date,Facture N°,ID Joueur,Jeu,Pack,Montant,Promo,Methode,Code,Statut,Telephone,Email\n";
-    orders.forEach(o => {
-        const gameName = { pubg: 'PUBG Mobile', ff: 'Free Fire', codm: 'COD Mobile', perso: 'Perso' }[o.game];
-        csv += `${new Date(o.timestamp).toLocaleString('fr-FR')},ASG-${o.id},${o.playerId},${gameName},${o.pack} ${PACKS[o.game].name},${o.amount},${o.promo||''},${o.method},${o.code},${o.status},${o.phone||'Carte'},${o.email||''}\n`;
-    });
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `factures_asg_${new Date().toISOString().split('T')[0]}.csv`;
-    a.click();
-}
-
-// --- PROMOS ---
-function addPromo() {
-    const code = document.getElementById('newPromoCode').value.trim().toUpperCase();
-    const value = parseInt(document.getElementById('newPromoValue').value);
-    if (!code ||!value || value < 1 || value > 90) return showAlert("Code ou % invalide", "danger");
-    if (promos[code]) return showAlert("Code existe déjà", "warning");
-
-    promos[code] = { value, active: true };
-    localStorage.setItem("promos", JSON.stringify(promos));
-    document.getElementById('newPromoCode').value = '';
-    document.getElementById('newPromoValue').value = '';
-    renderPromoList();
-    showAlert(`Promo ${code} créée`, "success");
-}
-
-function renderPromoList() {
-    const list = document.getElementById('promoList');
-    list.innerHTML = Object.keys(promos).map(code => `
-        <div class="promo-list-item ${promos[code].active? '' : 'inactive'}">
-            <span><b>${code}</b> : -${promos[code].value}%</span>
-            <div>
-                <button onclick="togglePromo('${code}')" style="background:none;border:none;color:var(--accent);cursor:pointer;padding:4px 8px;">
-                    <i class="fa-solid fa-${promos[code].active? 'pause' : 'play'}"></i>
-                </button>
-                <button onclick="deletePromo('${code}')" style="background:none;border:none;color:var(--danger);cursor:pointer;padding:4px 8px;">
-                    <i class="fa-solid fa-trash"></i>
-                </button>
-            </div>
-        </div>`).join('');
-}
-
-function togglePromo(code) {
-    promos[code].active =!promos[code].active;
-    localStorage.setItem("promos", JSON.stringify(promos));
-    renderPromoList();
-}
-
-function deletePromo(code) {
-    if (confirm(`Supprimer ${code}?`)) {
-        delete promos[code];
-        localStorage.setItem("promos", JSON.stringify(promos));
-        renderPromoList();
-    }
-}
-
-// --- PRIX ---
-function renderPriceEditor() {
-    const game = document.getElementById('priceGameSelect').value;
-    const editor = document.getElementById('priceEditor');
-    editor.innerHTML = '';
-
-    Object.keys(PACKS[game].packs).forEach(uc => {
-        editor.innerHTML += `
-        <div class="price-row">
-            <label>${uc}</label>
-            <input type="number" id="price_${game}_${uc}" value="${PACKS[game].packs[uc]}" placeholder="Prix">
-                      <button class="btn btn-secondary" style="padding:10px;" onclick="deletePrice('${game}','${uc}')"><i class="fa-solid fa-trash"></i></button>
-        </div>`;
-    });
-    editor.innerHTML += `
-    <div class="price-row">
-        <input id="newUcKey" placeholder="Nouveau" style="font-size:12px;">
-        <input id="newUcPrice" type="number" placeholder="Prix" style="font-size:12px;">
-        <button class="btn btn-success" style="padding:10px;" onclick="addPrice('${game}')"><i class="fa-solid fa-plus"></i></button>
+/* ===== REGISTER ===== */
+function renderReg(){
+  const el=document.getElementById('regContent');
+  const u=window.CU;
+  if(!u){el.innerHTML=`<div class="empty"><span class="ei">🔐</span><p>Connectez-vous pour inscrire votre équipe.</p></div>`;return;}
+  const my=validTeams().find(t=>t.ownerUid===u.uid);
+  if(my){
+    el.innerHTML=`<div class="rbox"><div class="rh"><div class="rh-icon">✅</div><div><div class="rh-title">Équipe Inscrite</div><div class="rh-sub">Votre équipe est déjà enregistrée.</div></div></div><div class="rb"><p style="color:var(--text2);">Équipe <strong style="color:var(--gold);">${x(my.name)}</strong> bien inscrite.</p><br><button class="rsub" style="max-width:200px;" onclick="goTab('monequipe')">Mon Équipe</button></div></div>`;
+    return;
+  }
+  if(validTeams().length>=25){
+    el.innerHTML=`<div class="rbox"><div class="rh"><div class="rh-icon">🔒</div><div><div class="rh-title">Inscriptions Fermées</div><div class="rh-sub">Maximum 25 équipes atteint.</div></div></div><div class="rb"><p class="empty" style="padding:20px 0;">Les inscriptions sont fermées.</p></div></div>`;
+    return;
+  }
+  el.innerHTML=`
+    <div class="rbox">
+      <div class="rh"><div class="rh-icon">📝</div><div><div class="rh-title">Inscrire Mon Équipe</div><div class="rh-sub">1 équipe maximum · 4 joueurs obligatoires</div></div></div>
+      <div class="rb">
+        <div class="fg"><label>Nom de l'équipe *</label><input type="text" id="rTN" placeholder="Ex: Alpha Squad Mali" maxlength="30"/></div>
+        <div class="fg">
+          <label>Logo — choisir depuis votre galerie</label>
+          <input type="file" id="rLF" accept="image/*" onchange="prevLogo(this)"/>
+          <div class="lpw"><img id="rLP" class="lprev"/><span class="lhint" id="rLH">Aucune image sélectionnée</span></div>
+        </div>
+        <div class="pgrid">
+          <div class="fg"><label>Joueur 1 — Capitaine *</label><input type="text" id="rP1" placeholder="Pseudo PUBG" maxlength="20"/></div>
+          <div class="fg"><label>Joueur 2 *</label><input type="text" id="rP2" placeholder="Pseudo PUBG" maxlength="20"/></div>
+          <div class="fg"><label>Joueur 3 *</label><input type="text" id="rP3" placeholder="Pseudo PUBG" maxlength="20"/></div>
+          <div class="fg"><label>Joueur 4 *</label><input type="text" id="rP4" placeholder="Pseudo PUBG" maxlength="20"/></div>
+        </div>
+        <button class="rsub" id="rBtn" onclick="doRegister()">✅ Inscrire Mon Équipe</button>
+      </div>
     </div>`;
 }
 
-function savePrices() {
-    const game = document.getElementById('priceGameSelect').value;
-    Object.keys(PACKS[game].packs).forEach(uc => {
-        const newPrice = parseInt(document.getElementById(`price_${game}_${uc}`).value);
-        if (newPrice && newPrice > 0) PACKS[game].packs[uc] = newPrice;
-    });
-    localStorage.setItem("PACKS", JSON.stringify(PACKS));
-    showAlert("Prix sauvegardés", "success");
-}
+window.prevLogo=function(inp){
+  if(inp.files&&inp.files[0]){
+    const r=new FileReader();
+    r.onload=e=>{
+      logoB64=e.target.result;
+      const img=document.getElementById('rLP');
+      if(img){img.src=logoB64;img.style.display='block';}
+      const h=document.getElementById('rLH');if(h)h.textContent='✅ Logo sélectionné';
+    };
+    r.readAsDataURL(inp.files[0]);
+  }
+};
 
-function resetPrices() {
-    if (confirm("Réinitialiser tous les prix?")) {
-        localStorage.removeItem("PACKS");
-        location.reload();
-    }
-}
+window.doRegister=function(){
+  const nm=document.getElementById('rTN')?.value.trim();
+  const ps=[1,2,3,4].map(i=>document.getElementById('rP'+i)?.value.trim());
+  if(!nm)return toast('Nom d\'équipe requis','err');
+  if(ps.some(p=>!p))return toast('Les 4 joueurs sont obligatoires','err');
+  if(!window.CU)return toast('Connectez-vous d\'abord','err');
+  if(validTeams().find(t=>t&&t.name&&t.name.toLowerCase()===nm.toLowerCase()))return toast('Ce nom est déjà utilisé','err');
+  const btn=document.getElementById('rBtn');
+  if(btn){btn.disabled=true;btn.textContent='Inscription en cours...';}
+  const id='team_'+Date.now();
+  const team={id,name:nm,players:ps.map((n,i)=>({name:n,id:'p'+(i+1)})),logo:logoB64||null,status:'pending',points:0,kills:0,ownerUid:window.CU.uid,ownerEmail:window.CU.email,createdAt:Date.now()};
+  waitFB(()=>{
+    window._set(window._ref(window._db,'teams/'+id),team)
+      .then(()=>{toast('Équipe "'+nm+'" inscrite avec succès !');logoB64=null;renderReg();renderMyTeam();})
+      .catch(e=>{toast('Erreur: '+e.message,'err');if(btn){btn.disabled=false;btn.textContent='✅ Inscrire Mon Équipe';}});
+  });
+};
 
-function addPrice(game) {
-    const uc = document.getElementById('newUcKey').value;
-    const price = parseInt(document.getElementById('newUcPrice').value);
-    if (!uc ||!price) return showAlert("Remplis les champs", "danger");
-    PACKS[game].packs[uc] = price;
-    localStorage.setItem("PACKS", JSON.stringify(PACKS));
-    renderPriceEditor();
-}
+/* ===== MY TEAM ===== */
+function renderMyTeam(){
+  const el=document.getElementById('myTeamContent');
+  const u=window.CU;
+  if(!u){el.innerHTML=`<div class="empty"><span class="ei">🔐</span><p>Connectez-vous pour voir votre équipe.</p></div>`;return;}
+  const my=validTeams().find(t=>t.ownerUid===u.uid);
+  if(!my){
+    el.innerHTML=`<div class="empty"><span class="ei">🎮</span><p>Vous n'avez pas encore d'équipe.</p><br><button class="rsub" style="max-width:220px;margin:16px auto;display:block;" onclick="goTab('inscription')">Inscrire Mon Équipe</button></div>`;
+    return;
+  }
+  const sorted=rsort(validTeams());
+  const rank=sorted.findIndex(t=>t.id===my.id)+1;
+  const alpha=rank<=26?String.fromCharCode(64+rank)+'.':'#'+rank;
+  const lg=my.logo?`<img src="${my.logo}" class="mtlg"/>`:`<div class="mtnlg">🎮</div>`;
+  const hist=myHistory(my.id);
 
-function deletePrice(game, uc) {
-    if (confirm(`Supprimer le pack ${uc}?`)) {
-        delete PACKS[game].packs[uc];
-        localStorage.setItem("PACKS", JSON.stringify(PACKS));
-        renderPriceEditor();
-    }
-}
+  // Players with 1./2./3./4. format
+  const playersHtml=(my.players||[]).map((p,i)=>`
+    <div class="mt-player">
+      <span class="mt-player-n">${i+1}.</span>
+      <span class="mt-player-name">${x(p.name||'—')}</span>
+      ${i===0?'<span class="cap-badge">Capitaine</span>':''}
+    </div>
+  `).join('');
 
-// --- CLIENTS ---
-function manageClient(action) {
-    const id = document.getElementById('blockInput').value.trim();
-    if (!id) return showAlert("Entre un ID", "danger");
-
-    if (action === 'suspend') {
-        suspendedUsers[id] = Date.now();
-        localStorage.setItem("suspendedUsers", JSON.stringify(suspendedUsers));
-        showAlert(`${id} suspendu`, "warning");
-    } else if (action === 'block') {
-        if (!blockedUsers.includes(id)) blockedUsers.push(id);
-        localStorage.setItem("blockedUsers", JSON.stringify(blockedUsers));
-        showAlert(`${id} bloqué`, "danger");
-    } else if (action === 'unblock') {
-        blockedUsers = blockedUsers.filter(u => u!== id);
-        delete suspendedUsers[id];
-        localStorage.setItem("blockedUsers", JSON.stringify(blockedUsers));
-        localStorage.setItem("suspendedUsers", JSON.stringify(suspendedUsers));
-        showAlert(`${id} débloqué`, "success");
-    }
-    document.getElementById('blockInput').value = '';
-    renderClientLists();
-}
-
-function renderClientLists() {
-    const suspendedList = document.getElementById('suspendedList');
-    const blockedList = document.getElementById('blockedList');
-
-    suspendedList.innerHTML = Object.keys(suspendedUsers).length === 0? '<p style="font-size:12px;opacity:0.6;">Aucun</p>' :
-        Object.keys(suspendedUsers).map(id => `
-        <div class="client-list-item suspended">
-            <div><b>${id}</b><br><small>Suspendu le ${new Date(suspendedUsers[id]).toLocaleDateString('fr-FR')}</small></div>
-            <button class="btn btn-success" style="padding:6px 12px;font-size:11px;" onclick="document.getElementById('blockInput').value='${id}';manageClient('unblock')">Débloquer</button>
-        </div>`).join('');
-
-    blockedList.innerHTML = blockedUsers.length === 0? '<p style="font-size:12px;opacity:0.6;">Aucun</p>' :
-        blockedUsers.map(id => `
-        <div class="client-list-item blocked">
-            <div><b>${id}</b><br><small>Bloqué</small></div>
-            <button class="btn btn-success" style="padding:6px 12px;font-size:11px;" onclick="document.getElementById('blockInput').value='${id}';manageClient('unblock')">Débloquer</button>
-        </div>`).join('');
-}
-
-function renderPendingList() {
-    const list = document.getElementById('pendingList');
-    const pending = orders.filter(o => o.status === 'pending');
-    if (pending.length === 0) {
-        list.innerHTML = '<p style="text-align:center;opacity:0.6;font-size:13px;">Aucune commande en attente</p>';
-        return;
-    }
-    list.innerHTML = pending.map(o => `
-        <div class="history-item" style="border-left-color:var(--warning);">
-            <div style="display:flex;justify-content:space-between;align-items:start;">
-                <div>
-                    <b>${o.pack} ${PACKS[o.game]?.name || 'N/A'}</b><br>
-                    <small>ID: ${o.playerId} • ${o.phone} • ${o.amount.toLocaleString()}F</small><br>
-                    <small style="color:var(--accent);">Code: ${o.code}</small>
-                </div>
-                <button class="btn btn-success" style="padding:8px 14px;font-size:12px;width:auto;" onclick="validatePayment('${o.code}')">
-                    <i class="fa-solid fa-check"></i> Valider
-                </button>
+  el.innerHTML=`
+    <div class="mtwrap">
+      <div class="mtcard">
+        <div class="mtbanner">${lg}<div class="mtinfo"><div class="mtn">${x(my.name)}</div><div class="mtr">Classement #${rank} sur ${sorted.length} équipes</div>${bdg(my.status)}</div></div>
+        <div class="mtbody">
+          <div class="mtstats">
+            <div class="mts"><div class="mts-v" style="color:var(--gold);">#${rank}</div><div class="mts-l">Position</div></div>
+            <div class="mts"><div class="mts-v" style="color:var(--blue);">${my.points||0}</div><div class="mts-l">Points</div></div>
+            <div class="mts"><div class="mts-v" style="color:var(--red);">${my.kills||0}</div><div class="mts-l">Kills</div></div>
+          </div>
+          <div class="roster-t">Roster de l'équipe</div>
+          <div class="mt-team-entry">
+            <div class="mt-team-head">
+              <span class="mt-team-a">${alpha}</span>
+              <span class="mt-team-name">${x(my.name)}</span>
             </div>
-        </div>`).join('');
+            <div class="mt-players-body">${playersHtml}</div>
+          </div>
+        </div>
+      </div>
+      ${hist}
+    </div>`;
 }
 
-function validatePayment(code) {
-    const idx = orders.findIndex(o => o.code === code);
-    if (idx === -1) return;
-    orders[idx].status = "delivered";
-    localStorage.setItem("orders", JSON.stringify(orders));
-    showAlert(`Paiement ${code} validé`, "success");
-    renderPendingList();
-    updateStats();
+function myHistory(tid){
+  const hs=Object.values(window.MD||{}).filter(m=>m.results&&m.results[tid]).sort((a,b)=>b.savedAt-a.savedAt);
+  if(!hs.length)return'';
+  const pl={group:'Groupes',quarterfinal:'Quarts',semifinal:'Demis',final:'Finale'};
+  return`<div style="margin-top:20px;">
+    <div class="sec-title" style="margin-bottom:12px;">Historique Matchs</div>
+    ${hs.map(m=>{
+      const r=m.results[tid];
+      return`<div class="mi" style="margin-bottom:10px;">
+        <div class="mih">
+          <span class="mi-num">Match #${m.matchNum}</span>
+          <span class="mi-phase">${pl[m.phase]||m.phase}</span>
+          <span style="font-family:'Orbitron',sans-serif;font-size:18px;font-weight:700;color:${r.rank===1?'#ffd700':r.rank<=3?'#c0c0c0':'var(--text)'};">#${r.rank}</span>
+          <span style="color:var(--red);font-weight:600;">💀 ${r.kills} kills</span>
+        </div>
+      </div>`;
+    }).join('')}
+  </div>`;
 }
 
-// Charger PACKS sauvegardés
-const savedPACKS = JSON.parse(localStorage.getItem("PACKS"));
-if (savedPACKS) Object.assign(PACKS, savedPACKS);
-
-console.log('ASG SHOP V9 - Tout est prêt! Triple-clic sur le logo pour admin.');
+/* ===== UTILS ===== */
+function bdg(s){
+  const m={qualified:['bq','✅ Qualifié'],final:['bf','🏅 Finale'],winner:['bw','👑 Vainqueur'],eliminated:['be','❌ Éliminé'],pending:['bp','⏳ En attente']};
+  const[c,l]=m[s]||m.pending;return`<span class="badge ${c}">${l}</span>`;
+}
+function x(s){const d=document.createElement('div');d.textContent=s||'';return d.innerHTML;}
+function toast(msg,type=''){
+  const t=document.getElementById('toast');t.textContent=msg;
+  t.className='show'+(type?' '+type:'');
+  clearTimeout(t._to);t._to=setTimeout(()=>t.className='',3200);
+}
 </script>
 </body>
 </html>
